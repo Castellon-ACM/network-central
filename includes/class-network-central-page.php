@@ -28,7 +28,7 @@ class Network_Central_Page {
 		$notice_success = 'rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-emerald-300 text-sm mb-6';
 		$notice_error   = 'rounded-lg border border-red-500/40 bg-red-500/10 px-4 py-3 text-red-300 text-sm mb-6';
 		?>
-		<script src="https://cdn.tailwindcss.com"></script>
+		<script src="<?php echo esc_url( NETWORK_CENTRAL_PLUGIN_URL . 'assets/js/tailwind.min.js' ); ?>"></script>
 		<script>
 			tailwind.config = {
 				darkMode: 'class',
