@@ -49,6 +49,9 @@ class Network_Central_Page {
 				if ( 'posts_saved' === $nc_ok ) {
 					echo '<div class="' . esc_attr( $notice_success ) . '">' . esc_html__( 'Blog network management setting saved.', 'network-central' ) . '</div>';
 				}
+				if ( 'cpt_saved' === $nc_ok ) {
+					echo '<div class="' . esc_attr( $notice_success ) . '">' . esc_html__( 'CPT network management setting saved.', 'network-central' ) . '</div>';
+				}
 				if ( 'enabled' === $nc_ok ) {
 					echo '<div class="' . esc_attr( $notice_success ) . '">' . esc_html__( 'Multisite enabled successfully. wp-config.php has been updated and the network tables have been created.', 'network-central' ) . '</div>';
 				}
@@ -147,6 +150,7 @@ class Network_Central_Page {
 				$woo_enabled  = Network_Central_Woo::is_enabled();
 				$all_sites    = Network_Central_Posts::get_all_sites();
 				$posts_enabled = Network_Central_Posts::is_enabled();
+				$cpt_enabled  = Network_Central_Cpt::is_enabled();
 				?>
 				<div class="mt-6 rounded-xl border border-slate-700/60 bg-slate-900/40 px-6 py-5">
 					<h2 class="text-sm font-semibold text-slate-400 uppercase tracking-widest mb-4"><?php esc_html_e( 'WooCommerce network management', 'network-central' ); ?></h2>
@@ -245,6 +249,51 @@ class Network_Central_Page {
 							<a href="<?php echo esc_url( network_admin_url( 'admin.php?page=' . Network_Central_Posts::PAGE_SLUG ) ); ?>"
 								class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-600 text-slate-300 hover:bg-slate-800 hover:border-slate-500 transition text-sm">
 								<?php esc_html_e( 'Go to Blog Manager', 'network-central' ); ?>
+								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+								</svg>
+							</a>
+						</div>
+					<?php endif; ?>
+				</div>
+
+				<!-- CPT Manager section -->
+				<div class="mt-6 rounded-xl border border-slate-700/60 bg-slate-900/40 px-6 py-5">
+					<h2 class="text-sm font-semibold text-slate-400 uppercase tracking-widest mb-4"><?php esc_html_e( 'CPT network management', 'network-central' ); ?></h2>
+
+					<p class="text-slate-400 text-sm mb-4">
+						<?php esc_html_e( 'Enable to discover and manage all custom post types registered across the network from one place.', 'network-central' ); ?>
+					</p>
+
+					<form method="post" action="<?php echo esc_url( add_query_arg( 'page', NETWORK_CENTRAL_PAGE_SLUG, network_central_admin_url() ) ); ?>">
+						<?php wp_nonce_field( Network_Central_Cpt::NONCE_ACTION, 'network_central_cpt_nonce' ); ?>
+
+						<label class="flex items-center gap-4 cursor-pointer group mb-4">
+							<input type="checkbox" name="network_central_cpt" value="1"
+								<?php checked( $cpt_enabled ); ?>
+								class="nc-toggle-input sr-only">
+							<span class="nc-toggle"></span>
+							<div>
+								<p class="text-slate-100 font-semibold text-base group-hover:text-white transition">
+									<?php esc_html_e( 'Enable CPT network management', 'network-central' ); ?>
+								</p>
+								<p class="text-slate-500 text-sm mt-0.5">
+									<?php esc_html_e( 'Adds a CPT Manager that auto-discovers all custom post types across every site and lets you view and edit entries network-wide.', 'network-central' ); ?>
+								</p>
+							</div>
+						</label>
+
+						<button type="submit"
+							class="px-5 py-2 rounded-lg bg-cyan-500/20 border border-cyan-400/60 text-cyan-300 text-sm font-medium hover:bg-cyan-500/30 transition">
+							<?php esc_html_e( 'Save', 'network-central' ); ?>
+						</button>
+					</form>
+
+					<?php if ( $cpt_enabled ) : ?>
+						<div class="mt-4 pt-4 border-t border-slate-700/60">
+							<a href="<?php echo esc_url( network_admin_url( 'admin.php?page=' . Network_Central_Cpt::PAGE_SLUG ) ); ?>"
+								class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-600 text-slate-300 hover:bg-slate-800 hover:border-slate-500 transition text-sm">
+								<?php esc_html_e( 'Go to CPT Manager', 'network-central' ); ?>
 								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
 								</svg>
