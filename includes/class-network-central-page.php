@@ -83,18 +83,11 @@ class Network_Central_Page {
 
 						<div class="space-y-2">
 							<label class="flex items-center gap-4 cursor-pointer group <?php echo ! $can_toggle ? 'opacity-60 cursor-not-allowed' : ''; ?>">
-								<div class="relative flex-shrink-0">
-									<input type="checkbox" name="network_central_multisite" value="1"
-										<?php checked( $toggle_on ); ?>
-										<?php echo ! $can_toggle ? 'disabled' : ''; ?>
-										class="sr-only peer">
-									<span class="block w-14 h-8 rounded-full bg-slate-700 border border-slate-600 transition-all
-										peer-focus-visible:ring-2 peer-focus-visible:ring-cyan-400/50
-										after:content-[''] after:absolute after:top-1 after:left-1
-										after:w-6 after:h-6 after:rounded-full after:bg-slate-300 after:transition-all after:shadow
-										peer-checked:after:translate-x-6 peer-checked:after:bg-cyan-400
-										peer-checked:bg-cyan-500/20 peer-checked:border-cyan-500/60"></span>
-								</div>
+								<input type="checkbox" name="network_central_multisite" value="1"
+									<?php checked( $toggle_on ); ?>
+									<?php echo ! $can_toggle ? 'disabled' : ''; ?>
+									class="nc-toggle-input sr-only">
+								<span class="nc-toggle"></span>
 								<div>
 									<p class="text-slate-100 font-semibold text-base group-hover:text-white transition">
 										<?php esc_html_e( 'Enable WordPress Multisite', 'network-central' ); ?>
@@ -170,17 +163,10 @@ class Network_Central_Page {
 							<?php wp_nonce_field( Network_Central_Woo::NONCE_ACTION, 'network_central_woo_nonce' ); ?>
 
 							<label class="flex items-center gap-4 cursor-pointer group mb-4">
-								<div class="relative flex-shrink-0">
-									<input type="checkbox" name="network_central_woo" value="1"
-										<?php checked( $woo_enabled ); ?>
-										class="sr-only peer">
-									<span class="block w-14 h-8 rounded-full bg-slate-700 border border-slate-600 transition-all
-										peer-focus-visible:ring-2 peer-focus-visible:ring-cyan-400/50
-										after:content-[''] after:absolute after:top-1 after:left-1
-										after:w-6 after:h-6 after:rounded-full after:bg-slate-300 after:transition-all after:shadow
-										peer-checked:after:translate-x-6 peer-checked:after:bg-cyan-400
-										peer-checked:bg-cyan-500/20 peer-checked:border-cyan-500/60"></span>
-								</div>
+								<input type="checkbox" name="network_central_woo" value="1"
+									<?php checked( $woo_enabled ); ?>
+									class="nc-toggle-input sr-only">
+								<span class="nc-toggle"></span>
 								<div>
 									<p class="text-slate-100 font-semibold text-base group-hover:text-white transition">
 										<?php esc_html_e( 'Enable network product management', 'network-central' ); ?>

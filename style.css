@@ -298,35 +298,43 @@ img,video { height:auto;max-width:100% }
 @keyframes pulse { 50% { opacity:.5 } }
 .animate-pulse { animation:pulse 2s cubic-bezier(.4,0,.6,1) infinite }
 
-/* --- After pseudo-element (toggle switch) --- */
-.after\:absolute::after { position:absolute }
-.after\:top-1::after { top:.25rem }
-.after\:left-1::after { left:.25rem }
-.after\:w-6::after { width:1.5rem }
-.after\:h-6::after { height:1.5rem }
-.after\:rounded-full::after { border-radius:9999px }
-.after\:bg-slate-300::after { background-color:rgb(203,213,225) }
-.after\:shadow::after { box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1) }
-.after\:transition-all::after {
-	transition-property:all;
-	transition-timing-function:cubic-bezier(.4,0,.2,1);
-	transition-duration:.15s
+/* --- Toggle switch component --- */
+.nc-toggle {
+	display: block;
+	position: relative;
+	width: 3.5rem;
+	height: 2rem;
+	border-radius: 9999px;
+	background-color: rgb(51,65,85);
+	border: 1px solid rgb(71,85,105);
+	transition: background-color .15s ease, border-color .15s ease;
+	flex-shrink: 0;
 }
-.after\:content-\[\''\'\]::after { content:'' }
-
-/* --- Peer (toggle switch) --- */
-.peer { /* marker */ }
-
-.peer:checked ~ .peer-checked\:after\:translate-x-6::after { transform:translateX(1.5rem) }
-.peer:checked ~ .peer-checked\:after\:bg-cyan-400::after { background-color:rgb(34,211,238) }
-.peer:checked ~ .peer-checked\:bg-cyan-500\/20 { background-color:rgba(6,182,212,.2) }
-.peer:checked ~ .peer-checked\:border-cyan-500\/60 { border-color:rgba(6,182,212,.6) }
-.peer:focus-visible ~ .peer-focus-visible\:ring-2 {
-	--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-	--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-	box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)
+.nc-toggle::after {
+	content: '';
+	display: block;
+	position: absolute;
+	top: .25rem;
+	left: .25rem;
+	width: 1.375rem;
+	height: 1.375rem;
+	border-radius: 9999px;
+	background-color: rgb(203,213,225);
+	box-shadow: 0 1px 3px 0 rgba(0,0,0,.3);
+	transition: transform .15s ease, background-color .15s ease;
 }
-.peer:focus-visible ~ .peer-focus-visible\:ring-cyan-400\/50 { --tw-ring-color:rgba(34,211,238,.5) }
+.nc-toggle-input:checked + .nc-toggle {
+	background-color: rgba(6,182,212,.2);
+	border-color: rgba(6,182,212,.6);
+}
+.nc-toggle-input:checked + .nc-toggle::after {
+	transform: translateX(1.5rem);
+	background-color: rgb(34,211,238);
+}
+.nc-toggle-input:focus-visible + .nc-toggle {
+	outline: 2px solid rgba(34,211,238,.5);
+	outline-offset: 2px;
+}
 
 /* --- Hover states --- */
 .hover\:bg-slate-600:hover { background-color:rgba(71,85,105,1) }
@@ -391,3 +399,4 @@ img,video { height:auto;max-width:100% }
 	border-color:rgba(71,85,105,.6);
 	box-shadow:none
 }
+.nc-body .nc-breakout .nc-toggle-input { all:unset;position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0) }
