@@ -6,6 +6,15 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [1.0.4] – 2026-04-26
+
+### Changed
+- All inline `<script>` and `<style>` blocks removed from PHP page renderers — styles now loaded via `wp_enqueue_style` from `style.css`.
+- Toggle switch refactored to a dedicated `.nc-toggle` / `.nc-toggle-input` component class — eliminates reliance on Tailwind peer/after utility chains that don't work reliably in static CSS.
+
+### Fixed
+- Toggle knob was not rendering after the switch from Tailwind Play CDN to static CSS.
+
 ## [1.0.3] – 2026-04-26
 
 ### Added

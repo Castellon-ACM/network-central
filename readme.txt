@@ -4,7 +4,7 @@ Tags: multisite, network, wp-config, htaccess, network setup
 Requires at least: 5.6
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPL-2.0+
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,11 @@ The plugin writes `wp-config.php` and installs the network tables regardless. Th
 
 == Changelog ==
 
+= 1.0.4 =
+* Changed: all inline styles and scripts removed from PHP page renderers — styles now loaded via wp_enqueue_style from style.css.
+* Changed: toggle switch refactored to dedicated .nc-toggle component class — no longer relies on Tailwind peer/after utility chains in static CSS.
+* Fixed: toggle knob was not rendering after switching from Tailwind CDN to static CSS.
+
 = 1.0.3 =
 * Added: translations for Spanish (es_ES), French (fr_FR), Italian (it_IT), and Portuguese (pt_PT).
 * Added: compile-mo.php script to recompile .po files without external tools.
@@ -107,6 +112,9 @@ The plugin writes `wp-config.php` and installs the network tables regardless. Th
 * Dark UI with Tailwind CSS, consistent style with Settinator.
 
 == Upgrade Notice ==
+
+= 1.0.4 =
+Fixes broken toggle switch after switching to static CSS. Update recommended.
 
 = 1.0.3 =
 Adds translations (es_ES, fr_FR, it_IT, pt_PT) and bundles Tailwind CSS and JetBrains Mono locally — no external requests. Safe to update.
