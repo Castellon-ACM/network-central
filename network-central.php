@@ -38,13 +38,9 @@ add_action( 'plugins_loaded', 'network_central_plugin_init' );
 add_action( 'admin_init',     'network_central_maybe_handle_toggle', 1 );
 
 if ( is_multisite() ) {
-	// Multisite active: register only in the Network Admin.
-	add_action( 'network_admin_menu',            'network_central_add_menu_page' );
-	add_action( 'network_admin_enqueue_scripts', 'network_central_enqueue_assets' );
+	add_action( 'network_admin_menu', 'network_central_add_menu_page' );
 } else {
-	// Single site: register in the regular admin so the toggle is reachable.
-	add_action( 'admin_menu',            'network_central_add_menu_page' );
-	add_action( 'admin_enqueue_scripts', 'network_central_enqueue_assets' );
+	add_action( 'admin_menu', 'network_central_add_menu_page' );
 }
 
 /**
@@ -71,30 +67,6 @@ function network_central_add_menu_page() {
 		array( 'Network_Central_Page', 'render' ),
 		'dashicons-networking',
 		79
-	);
-}
-
-/**
- * Enqueue Tailwind and font on the plugin page only.
- *
- * @param string $hook_suffix Current admin page hook.
- * @return void
- */
-function network_central_enqueue_assets( $hook_suffix ) {
-	if ( 'toplevel_page_network-central' !== $hook_suffix ) {
-		return;
-	}
-	wp_enqueue_script( 'network-central-tailwind', 'https://cdn.tailwindcss.com', array(), null, false );
-	wp_add_inline_script(
-		'network-central-tailwind',
-		'tailwind.config = { darkMode: "class", theme: { extend: { fontFamily: { mono: ["JetBrains Mono", "Consolas", "monospace"] } } } }',
-		'after'
-	);
-	wp_enqueue_style(
-		'network-central-font',
-		'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap',
-		array(),
-		null
 	);
 }
 
