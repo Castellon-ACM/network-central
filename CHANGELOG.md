@@ -6,6 +6,18 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [1.0.3] – 2026-04-26
+
+### Added
+- Translations for Spanish (`es_ES`), French (`fr_FR`), Italian (`it_IT`), and Portuguese (`pt_PT`) — 30 strings each, compiled to `.mo` binaries.
+- `languages/compile-mo.php` — PHP script to recompile `.po` files to `.mo` without external tools.
+- `fonts/JetBrainsMono-Regular.woff2`, `fonts/JetBrainsMono-Medium.woff2`, `fonts/JetBrainsMono-SemiBold.woff2` — JetBrains Mono font bundled locally.
+- `assets/js/tailwind.min.js` — Tailwind CSS Play CDN bundled locally.
+
+### Changed
+- JetBrains Mono font is now served from the plugin's `fonts/` directory instead of Google Fonts — no external font request.
+- Tailwind CSS is now loaded from the plugin's `assets/js/tailwind.min.js` instead of `cdn.tailwindcss.com` — no external script request.
+
 ## [1.0.2] – 2026-04-26
 
 ### Added

@@ -4,7 +4,7 @@ Tags: multisite, network, wp-config, htaccess, network setup
 Requires at least: 5.6
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPL-2.0+
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,12 @@ The plugin writes `wp-config.php` and installs the network tables regardless. Th
 
 == Changelog ==
 
+= 1.0.3 =
+* Added: translations for Spanish (es_ES), French (fr_FR), Italian (it_IT), and Portuguese (pt_PT).
+* Added: compile-mo.php script to recompile .po files without external tools.
+* Changed: JetBrains Mono font now bundled locally in fonts/ — no Google Fonts request.
+* Changed: Tailwind CSS now bundled locally in assets/js/ — no CDN request.
+
 = 1.0.2 =
 * Added: success notice after enabling Multisite (redirects to plugin page instead of network.php, avoiding the WordPress setup.php intercept).
 * Fixed: constants were inserted after require_once wp-settings.php on sites without the standard stop-editing comment — plugin now falls back to inserting before the require_once line so WordPress boots with Multisite defined.
@@ -101,6 +107,9 @@ The plugin writes `wp-config.php` and installs the network tables regardless. Th
 * Dark UI with Tailwind CSS, consistent style with Settinator.
 
 == Upgrade Notice ==
+
+= 1.0.3 =
+Adds translations (es_ES, fr_FR, it_IT, pt_PT) and bundles Tailwind CSS and JetBrains Mono locally — no external requests. Safe to update.
 
 = 1.0.2 =
 Critical fixes: constants now placed correctly in wp-config.php, plugin moves to Network Admin when Multisite is active, styles restored, and super admin grant guaranteed on first enable. Safe to update.
