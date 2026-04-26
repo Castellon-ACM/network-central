@@ -6,6 +6,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [1.0.5] – 2026-04-26
+
+### Added
+- Blog Manager (`network-central-posts`) — network-wide manager for posts, pages and comments across all sites, with site filter and pagination. Independent toggle in the main page.
+- CPT Manager (`network-central-cpt`) — auto-discovers all public custom post types registered across the network and displays them as dynamic tabs. Excludes built-in WordPress types and WooCommerce types automatically. Independent toggle in the main page.
+
 ## [1.0.4] – 2026-04-26
 
 ### Changed

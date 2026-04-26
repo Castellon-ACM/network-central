@@ -4,7 +4,7 @@ Tags: multisite, network, wp-config, htaccess, network setup
 Requires at least: 5.6
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GPL-2.0+
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,10 @@ The plugin writes `wp-config.php` and installs the network tables regardless. Th
 
 == Changelog ==
 
+= 1.0.5 =
+* Added: Blog Manager — network-wide posts, pages and comments manager with site filter and pagination (separate toggle).
+* Added: CPT Manager — auto-discovers all public custom post types across every site with dynamic tabs per type (separate toggle).
+
 = 1.0.4 =
 * Changed: all inline styles and scripts removed from PHP page renderers — styles now loaded via wp_enqueue_style from style.css.
 * Changed: toggle switch refactored to dedicated .nc-toggle component class — no longer relies on Tailwind peer/after utility chains in static CSS.
@@ -112,6 +116,9 @@ The plugin writes `wp-config.php` and installs the network tables regardless. Th
 * Dark UI with Tailwind CSS, consistent style with Settinator.
 
 == Upgrade Notice ==
+
+= 1.0.5 =
+Adds Blog Manager and CPT Manager for network-wide content management.
 
 = 1.0.4 =
 Fixes broken toggle switch after switching to static CSS. Update recommended.
