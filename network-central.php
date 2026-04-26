@@ -32,13 +32,19 @@ define( 'NETWORK_CENTRAL_NONCE_ACTION', 'network_central_toggle_multisite' );
 require_once NETWORK_CENTRAL_PLUGIN_PATH . 'includes/class-network-central-wpconfig.php';
 require_once NETWORK_CENTRAL_PLUGIN_PATH . 'includes/class-network-central-htaccess.php';
 require_once NETWORK_CENTRAL_PLUGIN_PATH . 'includes/class-network-central-multisite.php';
+require_once NETWORK_CENTRAL_PLUGIN_PATH . 'includes/class-network-central-woo.php';
 require_once NETWORK_CENTRAL_PLUGIN_PATH . 'includes/class-network-central-page.php';
+require_once NETWORK_CENTRAL_PLUGIN_PATH . 'includes/class-network-central-woo-page.php';
 
 add_action( 'plugins_loaded', 'network_central_plugin_init' );
 add_action( 'admin_init',     'network_central_maybe_handle_toggle', 1 );
+add_action( 'admin_init',     'network_central_maybe_handle_woo_toggle', 1 );
 
 if ( is_multisite() ) {
 	add_action( 'network_admin_menu', 'network_central_add_menu_page' );
+	if ( Network_Central_Woo::is_enabled() ) {
+		add_action( 'network_admin_menu', 'network_central_add_woo_submenu' );
+	}
 } else {
 	add_action( 'admin_menu', 'network_central_add_menu_page' );
 }
@@ -68,6 +74,48 @@ function network_central_add_menu_page() {
 		'dashicons-networking',
 		79
 	);
+}
+
+/**
+ * Register the Network Products submenu under Network Central.
+ *
+ * @return void
+ */
+function network_central_add_woo_submenu() {
+	add_submenu_page(
+		NETWORK_CENTRAL_PAGE_SLUG,
+		__( 'Network Products', 'network-central' ),
+		__( 'Network Products', 'network-central' ),
+		'manage_network',
+		'network-central-products',
+		array( 'Network_Central_Woo_Page', 'render' )
+	);
+}
+
+/**
+ * Handle the WooCommerce network management toggle.
+ *
+ * @return void
+ */
+function network_central_maybe_handle_woo_toggle() {
+	if ( ! isset( $_POST['network_central_woo_nonce'] ) || empty( $_POST['network_central_woo_nonce'] ) ) {
+		return;
+	}
+	if ( ! isset( $_GET['page'] ) || NETWORK_CENTRAL_PAGE_SLUG !== $_GET['page'] ) {
+		return;
+	}
+	if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['network_central_woo_nonce'] ) ), Network_Central_Woo::NONCE_ACTION ) ) {
+		wp_die( esc_html__( 'Security check failed.', 'network-central' ) );
+	}
+	if ( ! current_user_can( 'manage_network' ) ) {
+		wp_die( esc_html__( 'Permission denied.', 'network-central' ) );
+	}
+
+	$enabled = isset( $_POST['network_central_woo'] ) && '1' === $_POST['network_central_woo'];
+	Network_Central_Woo::set_enabled( $enabled );
+
+	wp_safe_redirect( add_query_arg( array( 'page' => NETWORK_CENTRAL_PAGE_SLUG, 'nc_ok' => 'woo_saved' ), network_central_admin_url() ) );
+	exit;
 }
 
 /**
