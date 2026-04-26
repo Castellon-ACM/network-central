@@ -6,6 +6,18 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [1.0.2] – 2026-04-26
+
+### Fixed
+- `.htaccess` rewrite rule was missing `.*` before `\.php` — the pattern `(\.php)$` only matched files literally named `.php`, so `index.php`, `wp-login.php`, and all PHP files inside subdirectory-style multisite URLs were not rewritten. This caused 403 on every network admin page after enabling Multisite.
+- Rewrite block replacement in `add_multisite_rules()` now uses `trim()` to avoid duplicate blank lines when replacing the WordPress single-site block.
+- `restore_single_site_rules()` now uses `trim()` consistently on the single-site block when replacing the Multisite block.
+- `enable_multisite_full()` now validates PHP syntax with `validate_syntax()` before writing `wp-config.php`, preventing a corrupt file from being saved.
+- `enable_multisite_full()` and `disable_multisite_full()` now use `[\'" ]` (with space) in the removal regex to handle non-standard `define()` formatting in `wp-config.php` (mirrors Settinator's exact regex).
+- `run_network_install()` now defines each constant with individual `defined()` guards instead of a loop, matching Settinator's exact logic.
+- `run_network_install()` promoted from `private` to `public` to allow fallback invocation if needed.
+- `enable()` method now updates `.htaccess` before checking `$ok` and returning early, ensuring `.htaccess` is always updated when `wp-config.php` write succeeds (mirrors Settinator's exact method order).
+
 ## [1.0.1] – 2026-04-26
 
 ### Added
@@ -36,6 +48,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - Compatible with PHP 7.4+ (no `match`, no `enum`, no PHP 8-only syntax).
 - Dark UI with Tailwind CSS CDN and JetBrains Mono font, consistent with the Settinator plugin style.
 
-[Unreleased]: https://github.com/Castellon-ACM/network-central/compare/v1.0.1...HEAD
+[Unreleased]: https://github.com/Castellon-ACM/network-central/compare/v1.0.2...HEAD
+[1.0.2]: https://github.com/Castellon-ACM/network-central/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/Castellon-ACM/network-central/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/Castellon-ACM/network-central/releases/tag/v1.0.0

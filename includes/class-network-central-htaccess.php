@@ -57,26 +57,26 @@ class Network_Central_Htaccess {
 			return true;
 		}
 
-		$block = "# BEGIN Multisite\n"
+		$block = "\n# BEGIN Multisite\n"
 			. "<IfModule mod_rewrite.c>\n"
 			. "RewriteEngine On\n"
 			. "RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]\n"
 			. "RewriteBase /\n"
 			. "RewriteRule ^index\\.php$ - [L]\n"
-			. "RewriteRule ^([_0-9a-zA-Z-]+/)?wp-admin$ \$1wp-admin/ [R=301,L]\n"
+			. "RewriteRule ^([_0-9a-zA-Z-]+/)?wp-admin$ $1wp-admin/ [R=301,L]\n"
 			. "RewriteCond %{REQUEST_FILENAME} -f [OR]\n"
 			. "RewriteCond %{REQUEST_FILENAME} -d\n"
 			. "RewriteRule ^ - [L]\n"
-			. "RewriteRule ^([_0-9a-zA-Z-]+/)?(wp-(content|admin|includes).*) \$2 [L]\n"
-			. "RewriteRule ^([_0-9a-zA-Z-]+/)?(\\.php)\$ \$2 [L]\n"
+			. "RewriteRule ^([_0-9a-zA-Z-]+/)?(wp-(content|admin|includes).*) $2 [L]\n"
+			. "RewriteRule ^([_0-9a-zA-Z-]+/)?(.*\\.php)$ $2 [L]\n"
 			. "RewriteRule . index.php [L]\n"
 			. "</IfModule>\n"
-			. "# END Multisite";
+			. "# END Multisite\n";
 
 		if ( preg_match( '/# BEGIN WordPress\b.*?# END WordPress\b/s', $content ) ) {
-			$content = preg_replace( '/# BEGIN WordPress\b.*?# END WordPress\b/s', $block, $content );
+			$content = preg_replace( '/# BEGIN WordPress\b.*?# END WordPress\b/s', trim( $block ), $content );
 		} else {
-			$content .= "\n" . $block . "\n";
+			$content = $content . $block;
 		}
 
 		return false !== file_put_contents( self::get_path(), $content, LOCK_EX );
@@ -93,7 +93,7 @@ class Network_Central_Htaccess {
 		}
 		$content = self::get_content();
 
-		$single_block = "# BEGIN WordPress\n"
+		$single_block = "\n# BEGIN WordPress\n"
 			. "<IfModule mod_rewrite.c>\n"
 			. "RewriteEngine On\n"
 			. "RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]\n"
@@ -103,12 +103,12 @@ class Network_Central_Htaccess {
 			. "RewriteCond %{REQUEST_FILENAME} !-d\n"
 			. "RewriteRule . /index.php [L]\n"
 			. "</IfModule>\n"
-			. "# END WordPress";
+			. "# END WordPress\n";
 
 		if ( preg_match( '/# BEGIN Multisite\b.*?# END Multisite\b/s', $content ) ) {
-			$content = preg_replace( '/# BEGIN Multisite\b.*?# END Multisite\b/s', $single_block, $content );
+			$content = preg_replace( '/# BEGIN Multisite\b.*?# END Multisite\b/s', trim( $single_block ), $content );
 		} else {
-			$content .= "\n" . $single_block . "\n";
+			$content = $content . $single_block;
 		}
 
 		return false !== file_put_contents( self::get_path(), $content, LOCK_EX );

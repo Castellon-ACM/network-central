@@ -19,13 +19,13 @@ class Network_Central_Multisite {
 	 */
 	public static function enable() {
 		$ok = Network_Central_Wpconfig::enable_multisite_full();
+		if ( $ok && Network_Central_Htaccess::is_writable() ) {
+			Network_Central_Htaccess::add_multisite_rules();
+		}
 		if ( ! $ok ) {
 			return false;
 		}
-		if ( Network_Central_Htaccess::is_writable() ) {
-			Network_Central_Htaccess::add_multisite_rules();
-		}
-		self::install_network_tables();
+		self::run_network_install();
 		return true;
 	}
 
@@ -44,35 +44,43 @@ class Network_Central_Multisite {
 
 	/**
 	 * Create network DB tables (wp_site, wp_blogs, etc.) in the current request.
+	 * Called right after writing wp-config so tables exist before the redirect.
 	 *
 	 * @return void
 	 */
-	private static function install_network_tables() {
+	public static function run_network_install() {
 		global $wpdb;
 
-		$domain = (string) parse_url( home_url(), PHP_URL_HOST );
-		$path   = (string) parse_url( home_url(), PHP_URL_PATH );
-
+		$domain = parse_url( home_url(), PHP_URL_HOST );
+		$path   = parse_url( home_url(), PHP_URL_PATH );
 		if ( empty( $domain ) ) {
 			$domain = isset( $_SERVER['HTTP_HOST'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) : 'localhost';
+		}
+		if ( empty( $path ) ) {
+			$path = '/';
 		}
 		$path = rtrim( $path, '/' );
 		if ( '' === $path ) {
 			$path = '/';
 		}
 
-		$const_values = array(
-			'MULTISITE'            => true,
-			'SUBDOMAIN_INSTALL'    => false,
-			'DOMAIN_CURRENT_SITE'  => $domain,
-			'PATH_CURRENT_SITE'    => $path,
-			'SITE_ID_CURRENT_SITE' => 1,
-			'BLOG_ID_CURRENT_SITE' => 1,
-		);
-		foreach ( $const_values as $const => $value ) {
-			if ( ! defined( $const ) ) {
-				define( $const, $value );
-			}
+		if ( ! defined( 'MULTISITE' ) ) {
+			define( 'MULTISITE', true );
+		}
+		if ( ! defined( 'SUBDOMAIN_INSTALL' ) ) {
+			define( 'SUBDOMAIN_INSTALL', false );
+		}
+		if ( ! defined( 'DOMAIN_CURRENT_SITE' ) ) {
+			define( 'DOMAIN_CURRENT_SITE', $domain );
+		}
+		if ( ! defined( 'PATH_CURRENT_SITE' ) ) {
+			define( 'PATH_CURRENT_SITE', $path );
+		}
+		if ( ! defined( 'SITE_ID_CURRENT_SITE' ) ) {
+			define( 'SITE_ID_CURRENT_SITE', 1 );
+		}
+		if ( ! defined( 'BLOG_ID_CURRENT_SITE' ) ) {
+			define( 'BLOG_ID_CURRENT_SITE', 1 );
 		}
 
 		foreach ( $wpdb->tables( 'ms_global' ) as $table => $prefixed_table ) {
@@ -85,6 +93,8 @@ class Network_Central_Multisite {
 		}
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		install_network();
-		populate_network( 1, $domain, get_option( 'admin_email' ), get_option( 'blogname' ), $path, false );
+		$email = get_option( 'admin_email' );
+		$name  = get_option( 'blogname' );
+		populate_network( 1, $domain, $email, $name, $path, false );
 	}
 }

@@ -71,6 +71,15 @@ The plugin writes `wp-config.php` and installs the network tables regardless. Th
 
 == Changelog ==
 
+= 1.0.2 =
+* Fixed: .htaccess rewrite rule was missing .* before \.php — only matched files literally named .php instead of index.php, wp-login.php, etc. This caused 403 on network admin pages after enabling Multisite.
+* Fixed: rewrite block replacement now uses trim() to avoid duplicate newlines when replacing the WordPress single-site block.
+* Fixed: restore_single_site_rules() now uses trim() consistently to match the same pattern.
+* Fixed: enable_multisite_full() now validates PHP syntax before writing wp-config.php (mirrors Settinator behavior).
+* Fixed: enable_multisite_full() and disable_multisite_full() now use [\'" ] (with space) in the removal regex to handle non-standard define() formatting in wp-config.php.
+* Fixed: run_network_install() now defines each constant individually with defined() guards (matches Settinator's exact logic) instead of a loop over an array.
+* Fixed: run_network_install() is now public so it can be called from the redirect fallback flow if needed.
+
 = 1.0.1 =
 * Renamed all internal files from class-nc-*.php to class-network-central-*.php.
 * Renamed all classes, constants, and functions from the nc_ / NC_ prefix to network_central_ / Network_Central_ to match the plugin slug convention.
@@ -90,6 +99,9 @@ The plugin writes `wp-config.php` and installs the network tables regardless. Th
 * Dark UI with Tailwind CSS, consistent style with Settinator.
 
 == Upgrade Notice ==
+
+= 1.0.2 =
+Bug fixes only. No breaking changes. Safe to update.
 
 = 1.0.1 =
 No breaking changes. Renames internal identifiers to match plugin slug convention. Safe to update.
