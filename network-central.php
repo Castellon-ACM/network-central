@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Network Central
  * Description: Enable or disable WordPress Multisite with a single toggle.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: 	Alejandro Castellón <Castellon-ACM>
  * Author URI: https://github.com/Castellon-ACM
  * Text Domain: network-central
@@ -22,7 +22,7 @@
 
 defined( 'ABSPATH' ) || die( 'No script kiddies please!' );
 
-define( 'NETWORK_CENTRAL_VERSION',     '1.0.0' );
+define( 'NETWORK_CENTRAL_VERSION',     '1.0.1' );
 define( 'NETWORK_CENTRAL_FILE',        __FILE__ );
 define( 'NETWORK_CENTRAL_PLUGIN_URL',  plugin_dir_url( __FILE__ ) );
 define( 'NETWORK_CENTRAL_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );

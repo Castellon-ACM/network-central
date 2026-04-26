@@ -6,6 +6,23 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [1.0.1] – 2026-04-26
+
+### Added
+- `uninstall.php` — safe no-op on uninstall; wp-config.php constants and .htaccess rules are user infrastructure and are not removed automatically.
+- `languages/network-central.pot` — POT template with all translatable strings for community translators.
+- `composer.json` — development dependency management (`phpunit/phpunit`, `brain/monkey`) and test runner scripts.
+- `Author URI` and `Domain Path` headers to the main plugin file.
+- `network_central_plugin_init()` — loads the text domain on `plugins_loaded` so translations work correctly.
+
+### Changed
+- Renamed all include files from `class-nc-*.php` to `class-network-central-*.php` to match the plugin slug convention (mirrors t-backup's `class-tbackup.php` pattern).
+- Renamed all PHP classes from `NC_*` to `Network_Central_*` (`NC_Wpconfig` → `Network_Central_Wpconfig`, etc.).
+- Renamed all constants from `NC_*` to `NETWORK_CENTRAL_*` (`NC_VERSION` → `NETWORK_CENTRAL_VERSION`, etc.).
+- Renamed all functions from `nc_*` to `network_central_*` (`nc_add_menu_page` → `network_central_add_menu_page`, etc.).
+- Renamed nonce field from `nc_multisite_nonce` to `network_central_nonce` and POST key from `nc_multisite` to `network_central_multisite`.
+- All UI strings are now English only.
+
 ## [1.0.0] – 2026-04-26
 
 ### Added
@@ -19,5 +36,6 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - Compatible with PHP 7.4+ (no `match`, no `enum`, no PHP 8-only syntax).
 - Dark UI with Tailwind CSS CDN and JetBrains Mono font, consistent with the Settinator plugin style.
 
-[Unreleased]: https://github.com/Castellon-ACM/network-central/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/Castellon-ACM/network-central/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/Castellon-ACM/network-central/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/Castellon-ACM/network-central/releases/tag/v1.0.0

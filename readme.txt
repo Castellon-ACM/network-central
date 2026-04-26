@@ -4,7 +4,7 @@ Tags: multisite, network, wp-config, htaccess, network setup
 Requires at least: 5.6
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPL-2.0+
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,15 @@ The plugin writes `wp-config.php` and installs the network tables regardless. Th
 
 == Changelog ==
 
+= 1.0.1 =
+* Renamed all internal files from class-nc-*.php to class-network-central-*.php.
+* Renamed all classes, constants, and functions from the nc_ / NC_ prefix to network_central_ / Network_Central_ to match the plugin slug convention.
+* All UI strings switched to English only.
+* Added uninstall.php — safe no-op since wp-config.php and .htaccess are user infrastructure.
+* Added languages/network-central.pot with all translatable strings.
+* Added composer.json for development dependency management and test runner config.
+* Added Author URI, Domain Path, and network_central_plugin_init() for proper text domain loading.
+
 = 1.0.0 =
 * Initial release.
 * Single toggle to enable or disable WordPress Multisite.
@@ -81,6 +90,9 @@ The plugin writes `wp-config.php` and installs the network tables regardless. Th
 * Dark UI with Tailwind CSS, consistent style with Settinator.
 
 == Upgrade Notice ==
+
+= 1.0.1 =
+No breaking changes. Renames internal identifiers to match plugin slug convention. Safe to update.
 
 = 1.0.0 =
 First stable release.
