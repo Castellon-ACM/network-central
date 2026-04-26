@@ -1,135 +1,139 @@
+# Portuguese (Portugal) translation for Network Central.
 # Copyright (C) 2026 Alejandro Castellón
 # This file is distributed under the GPL-2.0+ license.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Network Central 1.0.2\n"
 "Report-Msgid-Bugs-To: https://github.com/Castellon-ACM/network-central/issues\n"
 "POT-Creation-Date: 2026-04-26\n"
-"PO-Revision-Date: 2026-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2026-04-26 00:00+0000\n"
+"Last-Translator: Alejandro Castellón\n"
+"Language-Team: Portuguese (Portugal)\n"
+"Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: WP-CLI 2.x\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Network Central\n"
 "X-Domain: network-central\n"
 
 #. Plugin Name of the plugin.
 msgid "Network Central"
-msgstr ""
+msgstr "Network Central"
 
 #. Description of the plugin.
 msgid "Enable or disable WordPress Multisite with a single toggle."
-msgstr ""
+msgstr "Ative ou desative o WordPress Multisite com um único interruptor."
 
 #: network-central.php
 msgid "Security check failed."
-msgstr ""
+msgstr "Falha na verificação de segurança."
 
 #: network-central.php
 msgid "Permission denied."
-msgstr ""
+msgstr "Permissão negada."
 
 #: includes/class-network-central-page.php
 msgid "WordPress Multisite management"
-msgstr ""
+msgstr "Gestão do WordPress Multisite"
 
 #: includes/class-network-central-page.php
 msgid "Multisite enabled successfully. wp-config.php has been updated and the network tables have been created."
-msgstr ""
+msgstr "Multisite ativado com sucesso. O wp-config.php foi atualizado e as tabelas de rede foram criadas."
 
 #: includes/class-network-central-page.php
 msgid "Multisite disabled. wp-config.php and .htaccess have been restored to single-site."
-msgstr ""
+msgstr "Multisite desativado. O wp-config.php e o .htaccess foram restaurados para instalação de site único."
 
 #: includes/class-network-central-page.php
 msgid "wp-config.php is not writable. Fix the file permissions and try again."
-msgstr ""
+msgstr "O wp-config.php não tem permissões de escrita. Corrija as permissões do ficheiro e tente novamente."
 
 #: includes/class-network-central-page.php
 msgid "Failed to write wp-config.php or .htaccess. Check file permissions."
-msgstr ""
+msgstr "Não foi possível escrever no wp-config.php ou .htaccess. Verifique as permissões dos ficheiros."
 
 #: includes/class-network-central-page.php
 msgid "Multisite active"
-msgstr ""
+msgstr "Multisite ativo"
 
 #: includes/class-network-central-page.php
 msgid "Single site"
-msgstr ""
+msgstr "Site único"
 
 #: includes/class-network-central-page.php
 msgid "Enable WordPress Multisite"
-msgstr ""
+msgstr "Ativar WordPress Multisite"
 
 #: includes/class-network-central-page.php
 msgid "Subdirectory install. Writes constants to wp-config.php, updates .htaccess rewrite rules, and creates the network tables."
-msgstr ""
+msgstr "Instalação em subdiretório. Escreve as constantes no wp-config.php, atualiza as regras de reescrita do .htaccess e cria as tabelas de rede."
 
 #: includes/class-network-central-page.php
 msgid "wp-config.php is not writable. Fix file permissions to enable this option."
-msgstr ""
+msgstr "O wp-config.php não tem permissões de escrita. Corrija as permissões para ativar esta opção."
 
 #: includes/class-network-central-page.php
 msgid "Save"
-msgstr ""
+msgstr "Guardar"
 
 #: includes/class-network-central-page.php
 msgid "Go to Network Admin"
-msgstr ""
+msgstr "Ir para a administração de rede"
 
 #: includes/class-network-central-page.php
 msgid "WP_ALLOW_MULTISITE is set but the network is not fully installed yet."
-msgstr ""
+msgstr "WP_ALLOW_MULTISITE está definido mas a rede ainda não está completamente instalada."
 
 #: includes/class-network-central-page.php
 msgid "Complete the network setup from the WordPress screen."
-msgstr ""
+msgstr "Conclua a configuração da rede a partir do ecrã do WordPress."
 
 #: includes/class-network-central-page.php
 msgid "Go to Tools → Network Setup"
-msgstr ""
+msgstr "Ir para Ferramentas → Configuração da rede"
 
 #: includes/class-network-central-page.php
 msgid "System status"
-msgstr ""
+msgstr "Estado do sistema"
 
 #: includes/class-network-central-page.php
 msgid "WordPress Multisite"
-msgstr ""
+msgstr "WordPress Multisite"
 
 #: includes/class-network-central-page.php
 msgid "Active"
-msgstr ""
+msgstr "Ativo"
 
 #: includes/class-network-central-page.php
 msgid "Inactive"
-msgstr ""
+msgstr "Inativo"
 
 #: includes/class-network-central-page.php
 msgid "wp-config.php writable"
-msgstr ""
+msgstr "wp-config.php com permissões de escrita"
 
 #: includes/class-network-central-page.php
 msgid "Yes"
-msgstr ""
+msgstr "Sim"
 
 #: includes/class-network-central-page.php
 msgid "No"
-msgstr ""
+msgstr "Não"
 
 #: includes/class-network-central-page.php
 msgid ".htaccess writable"
-msgstr ""
+msgstr ".htaccess com permissões de escrita"
 
 #: includes/class-network-central-page.php
 msgid "No — manual rewrite rules required"
-msgstr ""
+msgstr "Não — regras de reescrita manuais necessárias"
 
 #: includes/class-network-central-page.php
 msgid "PHP version"
-msgstr ""
+msgstr "Versão PHP"
 
 #: includes/class-network-central-page.php
 msgid "WordPress version"
-msgstr ""
+msgstr "Versão WordPress"
