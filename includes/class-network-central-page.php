@@ -201,7 +201,7 @@ class Network_Central_Page {
 										<?php esc_html_e( 'Enable network product management', 'network-central' ); ?>
 									</p>
 									<p class="text-slate-500 text-sm mt-0.5">
-										<?php esc_html_e( 'Adds a Network Products page to manage all WooCommerce products across every site from the Network Admin.', 'network-central' ); ?>
+										<?php esc_html_e( 'Adds a WooCommerce Manager to handle products, orders, customers and coupons across every site from the Network Admin.', 'network-central' ); ?>
 									</p>
 								</div>
 							</label>
@@ -214,9 +214,9 @@ class Network_Central_Page {
 
 						<?php if ( $woo_enabled ) : ?>
 							<div class="mt-4 pt-4 border-t border-slate-700/60">
-								<a href="<?php echo esc_url( network_admin_url( 'admin.php?page=network-central-products' ) ); ?>"
+								<a href="<?php echo esc_url( network_admin_url( 'admin.php?page=' . Network_Central_Woo::PAGE_SLUG ) ); ?>"
 									class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-600 text-slate-300 hover:bg-slate-800 hover:border-slate-500 transition text-sm">
-									<?php esc_html_e( 'Go to Network Products', 'network-central' ); ?>
+									<?php esc_html_e( 'Go to WooCommerce Manager', 'network-central' ); ?>
 									<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
 									</svg>

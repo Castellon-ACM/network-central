@@ -84,10 +84,10 @@ function network_central_add_menu_page() {
 function network_central_add_woo_submenu() {
 	add_submenu_page(
 		NETWORK_CENTRAL_PAGE_SLUG,
-		__( 'Network Products', 'network-central' ),
-		__( 'Network Products', 'network-central' ),
+		__( 'WooCommerce Manager', 'network-central' ),
+		__( 'WooCommerce Manager', 'network-central' ),
 		'manage_network',
-		'network-central-products',
+		Network_Central_Woo::PAGE_SLUG,
 		array( 'Network_Central_Woo_Page', 'render' )
 	);
 }
