@@ -55,18 +55,7 @@ class Network_Central_Woo_Page {
 
 		$total_pages = $total > 0 ? (int) ceil( $total / $per_page ) : 1;
 		?>
-		<script src="<?php echo esc_url( NETWORK_CENTRAL_PLUGIN_URL . 'assets/js/tailwind.min.js' ); ?>"></script>
-		<script>tailwind.config={darkMode:'class',theme:{extend:{fontFamily:{mono:['JetBrains Mono','Consolas','monospace']}}}};</script>
-		<style>
-			<?php
-			$fu = NETWORK_CENTRAL_PLUGIN_URL . 'fonts/';
-			echo "@font-face{font-family:'JetBrains Mono';font-weight:400;font-style:normal;font-display:swap;src:url('" . esc_url( $fu . 'JetBrainsMono-Regular.woff2' ) . "') format('woff2');}";
-			echo "@font-face{font-family:'JetBrains Mono';font-weight:500;font-style:normal;font-display:swap;src:url('" . esc_url( $fu . 'JetBrainsMono-Medium.woff2' ) . "') format('woff2');}";
-			echo "@font-face{font-family:'JetBrains Mono';font-weight:600;font-style:normal;font-display:swap;src:url('" . esc_url( $fu . 'JetBrainsMono-SemiBold.woff2' ) . "') format('woff2');}";
-			?>
-		</style>
-
-		<div class="min-h-screen bg-slate-950 text-slate-100 font-mono" style="margin-left:-20px;margin-top:-8px;padding:2rem 2.5rem;box-sizing:border-box;">
+		<div class="nc-breakout min-h-screen bg-slate-950 text-slate-100 font-mono" style="margin-left:-20px;margin-top:-8px;padding:2rem 2.5rem;box-sizing:border-box;">
 		<div class="max-w-7xl mx-auto">
 
 			<!-- Header -->

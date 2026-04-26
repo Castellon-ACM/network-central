@@ -40,6 +40,11 @@ add_action( 'plugins_loaded', 'network_central_plugin_init' );
 add_action( 'admin_init',     'network_central_maybe_handle_toggle', 1 );
 add_action( 'admin_init',     'network_central_maybe_handle_woo_toggle', 1 );
 
+add_action( 'admin_enqueue_scripts',         'network_central_enqueue_assets' );
+add_action( 'network_admin_enqueue_scripts', 'network_central_enqueue_assets' );
+add_filter( 'admin_body_class',              'network_central_body_class' );
+add_filter( 'network_admin_body_class',      'network_central_body_class' );
+
 if ( is_multisite() ) {
 	add_action( 'network_admin_menu', 'network_central_add_menu_page' );
 	if ( Network_Central_Woo::is_enabled() ) {
@@ -47,6 +52,38 @@ if ( is_multisite() ) {
 	}
 } else {
 	add_action( 'admin_menu', 'network_central_add_menu_page' );
+}
+
+/**
+ * Enqueue plugin stylesheet on Network Central pages.
+ *
+ * @return void
+ */
+function network_central_enqueue_assets() {
+	$page = isset( $_GET['page'] ) ? sanitize_key( $_GET['page'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	if ( ! in_array( $page, array( NETWORK_CENTRAL_PAGE_SLUG, Network_Central_Woo::PAGE_SLUG ), true ) ) {
+		return;
+	}
+	wp_enqueue_style(
+		'network-central',
+		NETWORK_CENTRAL_PLUGIN_URL . 'style.css',
+		array(),
+		NETWORK_CENTRAL_VERSION
+	);
+}
+
+/**
+ * Add nc-body class to admin body on Network Central pages.
+ *
+ * @param string $classes
+ * @return string
+ */
+function network_central_body_class( $classes ) {
+	$page = isset( $_GET['page'] ) ? sanitize_key( $_GET['page'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	if ( in_array( $page, array( NETWORK_CENTRAL_PAGE_SLUG, Network_Central_Woo::PAGE_SLUG ), true ) ) {
+		$classes .= ' nc-body';
+	}
+	return $classes;
 }
 
 /**

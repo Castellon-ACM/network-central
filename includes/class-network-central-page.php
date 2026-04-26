@@ -28,22 +28,7 @@ class Network_Central_Page {
 		$notice_success = 'rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-emerald-300 text-sm mb-6';
 		$notice_error   = 'rounded-lg border border-red-500/40 bg-red-500/10 px-4 py-3 text-red-300 text-sm mb-6';
 		?>
-		<script src="<?php echo esc_url( NETWORK_CENTRAL_PLUGIN_URL . 'assets/js/tailwind.min.js' ); ?>"></script>
-		<script>
-			tailwind.config = {
-				darkMode: 'class',
-				theme: { extend: { fontFamily: { mono: ['JetBrains Mono', 'Consolas', 'monospace'] } } }
-			};
-		</script>
-		<style>
-			<?php
-			$fonts_url = NETWORK_CENTRAL_PLUGIN_URL . 'fonts/';
-			echo "@font-face{font-family:'JetBrains Mono';font-weight:400;font-style:normal;font-display:swap;src:url('" . esc_url( $fonts_url . 'JetBrainsMono-Regular.woff2' ) . "') format('woff2');}";
-			echo "@font-face{font-family:'JetBrains Mono';font-weight:500;font-style:normal;font-display:swap;src:url('" . esc_url( $fonts_url . 'JetBrainsMono-Medium.woff2' ) . "') format('woff2');}";
-			echo "@font-face{font-family:'JetBrains Mono';font-weight:600;font-style:normal;font-display:swap;src:url('" . esc_url( $fonts_url . 'JetBrainsMono-SemiBold.woff2' ) . "') format('woff2');}";
-			?>
-		</style>
-		<div class="min-h-screen bg-slate-950 text-slate-100 font-mono" style="margin-left:-20px;margin-top:-8px;padding:2rem 2.5rem;box-sizing:border-box;">
+		<div class="nc-breakout min-h-screen bg-slate-950 text-slate-100 font-mono" style="margin-left:-20px;margin-top:-8px;padding:2rem 2.5rem;box-sizing:border-box;">
 			<div class="max-w-2xl mx-auto">
 
 				<header class="border-b border-slate-700/80 pb-6 mb-8">
