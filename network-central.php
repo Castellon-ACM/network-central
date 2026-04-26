@@ -118,7 +118,7 @@ function network_central_maybe_handle_toggle() {
 	if ( $enable ) {
 		$ok = Network_Central_Multisite::enable();
 		if ( $ok ) {
-			wp_safe_redirect( admin_url( 'network.php' ) );
+			wp_safe_redirect( add_query_arg( array( 'page' => NETWORK_CENTRAL_PAGE_SLUG, 'nc_ok' => 'enabled' ), admin_url( 'admin.php' ) ) );
 			exit;
 		}
 		wp_safe_redirect( add_query_arg( array( 'page' => NETWORK_CENTRAL_PAGE_SLUG, 'nc_err' => 'write_failed' ), admin_url( 'admin.php' ) ) );

@@ -43,6 +43,9 @@ class Network_Central_Page {
 				$nc_ok  = isset( $_GET['nc_ok'] ) ? sanitize_key( wp_unslash( $_GET['nc_ok'] ) ) : '';
 				$nc_err = isset( $_GET['nc_err'] ) ? sanitize_key( wp_unslash( $_GET['nc_err'] ) ) : '';
 
+				if ( 'enabled' === $nc_ok ) {
+					echo '<div class="' . esc_attr( $notice_success ) . '">' . esc_html__( 'Multisite enabled successfully. wp-config.php has been updated and the network tables have been created.', 'network-central' ) . '</div>';
+				}
 				if ( 'disabled' === $nc_ok ) {
 					echo '<div class="' . esc_attr( $notice_success ) . '">' . esc_html__( 'Multisite disabled. wp-config.php and .htaccess have been restored to single-site.', 'network-central' ) . '</div>';
 				}
