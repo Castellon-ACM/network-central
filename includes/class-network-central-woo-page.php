@@ -114,7 +114,8 @@ class Network_Central_Woo_Page {
 					<input type="hidden" name="page" value="<?php echo esc_attr( Network_Central_Woo::PAGE_SLUG ); ?>">
 					<input type="hidden" name="tab" value="<?php echo esc_attr( $active_tab ); ?>">
 					<select name="nc_site"
-						class="bg-slate-800 border border-slate-600 text-slate-200 text-sm rounded-lg px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-cyan-500">
+						style="background-color:#1e293b;color:#e2e8f0;color-scheme:dark;"
+						class="border border-slate-600 text-sm rounded-lg px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-cyan-500">
 						<option value="0" <?php selected( 0, $filter_site ); ?>><?php esc_html_e( 'All sites', 'network-central' ); ?></option>
 						<?php foreach ( $woo_sites as $ws ) : ?>
 							<?php
