@@ -35,7 +35,14 @@ class Network_Central_Page {
 				theme: { extend: { fontFamily: { mono: ['JetBrains Mono', 'Consolas', 'monospace'] } } }
 			};
 		</script>
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap">
+		<style>
+			<?php
+			$fonts_url = NETWORK_CENTRAL_PLUGIN_URL . 'fonts/';
+			echo "@font-face{font-family:'JetBrains Mono';font-weight:400;font-style:normal;font-display:swap;src:url('" . esc_url( $fonts_url . 'JetBrainsMono-Regular.woff2' ) . "') format('woff2');}";
+			echo "@font-face{font-family:'JetBrains Mono';font-weight:500;font-style:normal;font-display:swap;src:url('" . esc_url( $fonts_url . 'JetBrainsMono-Medium.woff2' ) . "') format('woff2');}";
+			echo "@font-face{font-family:'JetBrains Mono';font-weight:600;font-style:normal;font-display:swap;src:url('" . esc_url( $fonts_url . 'JetBrainsMono-SemiBold.woff2' ) . "') format('woff2');}";
+			?>
+		</style>
 		<div class="min-h-screen bg-slate-950 text-slate-100 font-mono" style="margin-left:-20px;margin-top:-8px;padding:2rem 2.5rem;box-sizing:border-box;">
 			<div class="max-w-2xl mx-auto">
 
