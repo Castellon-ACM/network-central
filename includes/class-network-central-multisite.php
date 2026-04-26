@@ -87,14 +87,22 @@ class Network_Central_Multisite {
 			$wpdb->$table = $prefixed_table;
 		}
 
-		require_once ABSPATH . 'wp-admin/includes/network.php';
-		if ( network_domain_check() ) {
-			return;
-		}
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+		require_once ABSPATH . 'wp-admin/includes/network.php';
+
 		install_network();
+
 		$email = get_option( 'admin_email' );
 		$name  = get_option( 'blogname' );
-		populate_network( 1, $domain, $email, $name, $path, false );
+
+		if ( ! network_domain_check() ) {
+			populate_network( 1, $domain, $email, $name, $path, false );
+		}
+
+		// Always ensure the current user has super admin status.
+		$user_id = get_current_user_id();
+		if ( $user_id && function_exists( 'grant_super_admin' ) && ! is_super_admin( $user_id ) ) {
+			grant_super_admin( $user_id );
+		}
 	}
 }

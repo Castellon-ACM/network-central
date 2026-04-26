@@ -122,7 +122,14 @@ class Network_Central_Wpconfig {
 		if ( false !== $pos ) {
 			$content = substr_replace( $content, $block . "\n" . $stop, $pos, strlen( $stop ) );
 		} else {
-			$content = $content . $block;
+			// Fallback: insert before the require_once wp-settings.php line.
+			$require_line = "require_once ABSPATH . 'wp-settings.php';";
+			$req_pos      = strpos( $content, $require_line );
+			if ( false !== $req_pos ) {
+				$content = substr_replace( $content, $block . "\n" . $require_line, $req_pos, strlen( $require_line ) );
+			} else {
+				$content = $content . $block;
+			}
 		}
 
 		if ( ! self::validate_syntax( $content ) ) {
