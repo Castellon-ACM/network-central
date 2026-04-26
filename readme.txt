@@ -4,7 +4,7 @@ Tags: multisite, network, wp-config, htaccess, network setup
 Requires at least: 5.6
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPL-2.0+
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -72,13 +72,15 @@ The plugin writes `wp-config.php` and installs the network tables regardless. Th
 == Changelog ==
 
 = 1.0.2 =
-* Fixed: .htaccess rewrite rule was missing .* before \.php — only matched files literally named .php instead of index.php, wp-login.php, etc. This caused 403 on network admin pages after enabling Multisite.
-* Fixed: rewrite block replacement now uses trim() to avoid duplicate newlines when replacing the WordPress single-site block.
-* Fixed: restore_single_site_rules() now uses trim() consistently to match the same pattern.
-* Fixed: enable_multisite_full() now validates PHP syntax before writing wp-config.php (mirrors Settinator behavior).
-* Fixed: enable_multisite_full() and disable_multisite_full() now use [\'" ] (with space) in the removal regex to handle non-standard define() formatting in wp-config.php.
-* Fixed: run_network_install() now defines each constant individually with defined() guards (matches Settinator's exact logic) instead of a loop over an array.
-* Fixed: run_network_install() is now public so it can be called from the redirect fallback flow if needed.
+* Added: success notice after enabling Multisite (redirects to plugin page instead of network.php, avoiding the WordPress setup.php intercept).
+* Fixed: constants were inserted after require_once wp-settings.php on sites without the standard stop-editing comment — plugin now falls back to inserting before the require_once line so WordPress boots with Multisite defined.
+* Fixed: plugin now registers under Network Admin (network_admin_menu, manage_network) when Multisite is active.
+* Fixed: Tailwind CSS and font are now injected directly in render() — the wp_enqueue hooks fired with the wrong screen context in Network Admin and assets were skipped, leaving the page unstyled.
+* Fixed: run_network_install() now always calls install_network(), then populate_network() only if needed, then unconditionally grants super_admin to the current user — prevents "not allowed" on network/setup.php after first enable.
+* Fixed: .htaccess rewrite rule was missing .* before \.php, causing 403 on all PHP files in network admin after enabling Multisite.
+* Fixed: rewrite block replacement uses trim() to avoid duplicate blank lines.
+* Fixed: enable_multisite_full() validates PHP syntax before writing wp-config.php.
+* Fixed: removal regex now uses [\'" ] (with space) to handle non-standard define() formatting.
 
 = 1.0.1 =
 * Renamed all internal files from class-nc-*.php to class-network-central-*.php.
@@ -101,7 +103,7 @@ The plugin writes `wp-config.php` and installs the network tables regardless. Th
 == Upgrade Notice ==
 
 = 1.0.2 =
-Bug fixes only. No breaking changes. Safe to update.
+Critical fixes: constants now placed correctly in wp-config.php, plugin moves to Network Admin when Multisite is active, styles restored, and super admin grant guaranteed on first enable. Safe to update.
 
 = 1.0.1 =
 No breaking changes. Renames internal identifiers to match plugin slug convention. Safe to update.

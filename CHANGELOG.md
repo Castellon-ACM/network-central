@@ -8,15 +8,24 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [1.0.2] – 2026-04-26
 
+### Added
+- `nc_ok=enabled` success notice on the plugin page after enabling Multisite.
+- `network_central_admin_url()` helper that returns `network_admin_url()` when in Multisite context and `admin_url()` otherwise.
+
 ### Fixed
+- Constants were appended after `require_once ABSPATH . 'wp-settings.php'` on installations whose `wp-config.php` uses a non-standard stop-editing comment. `enable_multisite_full()` now falls back to inserting the constants block immediately before the `require_once` line, so WordPress always boots with Multisite constants defined.
+- After enabling Multisite the plugin now redirects to its own page (`?nc_ok=enabled`) instead of `admin_url('network.php')`. The previous target caused WordPress to intercept the request and redirect to `network/setup.php`, blocking the user.
+- Plugin menu is now registered via `network_admin_menu` (and capability `manage_network`) when Multisite is active, so it appears in the Network Admin instead of individual site admins.
+- Tailwind CSS and JetBrains Mono font are now output directly inside `render()` instead of going through `wp_enqueue_script` / `wp_enqueue_style`. The enqueue hooks fired with the wrong screen context in the Network Admin, so assets were silently skipped and the page rendered unstyled.
+- `run_network_install()` now always calls `install_network()` (idempotent via `dbDelta`) and calls `populate_network()` only when `network_domain_check()` returns false, then unconditionally calls `grant_super_admin()` for the current user. The previous logic could skip `populate_network()` on a re-run and leave the user without super-admin status, showing "Sorry, you are not allowed to access this page" on `network/setup.php`.
 - `.htaccess` rewrite rule was missing `.*` before `\.php` — the pattern `(\.php)$` only matched files literally named `.php`, so `index.php`, `wp-login.php`, and all PHP files inside subdirectory-style multisite URLs were not rewritten. This caused 403 on every network admin page after enabling Multisite.
 - Rewrite block replacement in `add_multisite_rules()` now uses `trim()` to avoid duplicate blank lines when replacing the WordPress single-site block.
 - `restore_single_site_rules()` now uses `trim()` consistently on the single-site block when replacing the Multisite block.
 - `enable_multisite_full()` now validates PHP syntax with `validate_syntax()` before writing `wp-config.php`, preventing a corrupt file from being saved.
-- `enable_multisite_full()` and `disable_multisite_full()` now use `[\'" ]` (with space) in the removal regex to handle non-standard `define()` formatting in `wp-config.php` (mirrors Settinator's exact regex).
-- `run_network_install()` now defines each constant with individual `defined()` guards instead of a loop, matching Settinator's exact logic.
-- `run_network_install()` promoted from `private` to `public` to allow fallback invocation if needed.
-- `enable()` method now updates `.htaccess` before checking `$ok` and returning early, ensuring `.htaccess` is always updated when `wp-config.php` write succeeds (mirrors Settinator's exact method order).
+- `enable_multisite_full()` and `disable_multisite_full()` now use `[\'" ]` (with space) in the removal regex to handle non-standard `define()` formatting in `wp-config.php`.
+- `run_network_install()` now defines each constant with individual `defined()` guards instead of a loop.
+- `run_network_install()` promoted from `private` to `public`.
+- `enable()` method now updates `.htaccess` before checking `$ok` and returning early.
 
 ## [1.0.1] – 2026-04-26
 
