@@ -33,12 +33,15 @@ require_once NETWORK_CENTRAL_PLUGIN_PATH . 'includes/class-network-central-wpcon
 require_once NETWORK_CENTRAL_PLUGIN_PATH . 'includes/class-network-central-htaccess.php';
 require_once NETWORK_CENTRAL_PLUGIN_PATH . 'includes/class-network-central-multisite.php';
 require_once NETWORK_CENTRAL_PLUGIN_PATH . 'includes/class-network-central-woo.php';
+require_once NETWORK_CENTRAL_PLUGIN_PATH . 'includes/class-network-central-posts.php';
 require_once NETWORK_CENTRAL_PLUGIN_PATH . 'includes/class-network-central-page.php';
 require_once NETWORK_CENTRAL_PLUGIN_PATH . 'includes/class-network-central-woo-page.php';
+require_once NETWORK_CENTRAL_PLUGIN_PATH . 'includes/class-network-central-posts-page.php';
 
 add_action( 'plugins_loaded', 'network_central_plugin_init' );
 add_action( 'admin_init',     'network_central_maybe_handle_toggle', 1 );
 add_action( 'admin_init',     'network_central_maybe_handle_woo_toggle', 1 );
+add_action( 'admin_init',     'network_central_maybe_handle_posts_toggle', 1 );
 
 add_action( 'admin_enqueue_scripts',         'network_central_enqueue_assets' );
 add_action( 'network_admin_enqueue_scripts', 'network_central_enqueue_assets' );
@@ -49,6 +52,9 @@ if ( is_multisite() ) {
 	add_action( 'network_admin_menu', 'network_central_add_menu_page' );
 	if ( Network_Central_Woo::is_enabled() ) {
 		add_action( 'network_admin_menu', 'network_central_add_woo_submenu' );
+	}
+	if ( Network_Central_Posts::is_enabled() ) {
+		add_action( 'network_admin_menu', 'network_central_add_posts_submenu' );
 	}
 } else {
 	add_action( 'admin_menu', 'network_central_add_menu_page' );
@@ -61,7 +67,7 @@ if ( is_multisite() ) {
  */
 function network_central_enqueue_assets() {
 	$page = isset( $_GET['page'] ) ? sanitize_key( $_GET['page'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-	if ( ! in_array( $page, array( NETWORK_CENTRAL_PAGE_SLUG, Network_Central_Woo::PAGE_SLUG ), true ) ) {
+	if ( ! in_array( $page, array( NETWORK_CENTRAL_PAGE_SLUG, Network_Central_Woo::PAGE_SLUG, Network_Central_Posts::PAGE_SLUG ), true ) ) {
 		return;
 	}
 	wp_enqueue_style(
@@ -80,7 +86,7 @@ function network_central_enqueue_assets() {
  */
 function network_central_body_class( $classes ) {
 	$page = isset( $_GET['page'] ) ? sanitize_key( $_GET['page'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-	if ( in_array( $page, array( NETWORK_CENTRAL_PAGE_SLUG, Network_Central_Woo::PAGE_SLUG ), true ) ) {
+	if ( in_array( $page, array( NETWORK_CENTRAL_PAGE_SLUG, Network_Central_Woo::PAGE_SLUG, Network_Central_Posts::PAGE_SLUG ), true ) ) {
 		$classes .= ' nc-body';
 	}
 	return $classes;
@@ -114,6 +120,22 @@ function network_central_add_menu_page() {
 }
 
 /**
+ * Register the Blog Manager submenu under Network Central.
+ *
+ * @return void
+ */
+function network_central_add_posts_submenu() {
+	add_submenu_page(
+		NETWORK_CENTRAL_PAGE_SLUG,
+		__( 'Blog Manager', 'network-central' ),
+		__( 'Blog Manager', 'network-central' ),
+		'manage_network',
+		Network_Central_Posts::PAGE_SLUG,
+		array( 'Network_Central_Posts_Page', 'render' )
+	);
+}
+
+/**
  * Register the Network Products submenu under Network Central.
  *
  * @return void
@@ -127,6 +149,32 @@ function network_central_add_woo_submenu() {
 		Network_Central_Woo::PAGE_SLUG,
 		array( 'Network_Central_Woo_Page', 'render' )
 	);
+}
+
+/**
+ * Handle the Blog network management toggle.
+ *
+ * @return void
+ */
+function network_central_maybe_handle_posts_toggle() {
+	if ( ! isset( $_POST['network_central_posts_nonce'] ) || empty( $_POST['network_central_posts_nonce'] ) ) {
+		return;
+	}
+	if ( ! isset( $_GET['page'] ) || NETWORK_CENTRAL_PAGE_SLUG !== $_GET['page'] ) {
+		return;
+	}
+	if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['network_central_posts_nonce'] ) ), Network_Central_Posts::NONCE_ACTION ) ) {
+		wp_die( esc_html__( 'Security check failed.', 'network-central' ) );
+	}
+	if ( ! current_user_can( 'manage_network' ) ) {
+		wp_die( esc_html__( 'Permission denied.', 'network-central' ) );
+	}
+
+	$enabled = isset( $_POST['network_central_posts'] ) && '1' === $_POST['network_central_posts'];
+	Network_Central_Posts::set_enabled( $enabled );
+
+	wp_safe_redirect( add_query_arg( array( 'page' => NETWORK_CENTRAL_PAGE_SLUG, 'nc_ok' => 'posts_saved' ), network_central_admin_url() ) );
+	exit;
 }
 
 /**

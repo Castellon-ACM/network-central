@@ -46,6 +46,9 @@ class Network_Central_Page {
 				if ( 'woo_saved' === $nc_ok ) {
 					echo '<div class="' . esc_attr( $notice_success ) . '">' . esc_html__( 'WooCommerce network management setting saved.', 'network-central' ) . '</div>';
 				}
+				if ( 'posts_saved' === $nc_ok ) {
+					echo '<div class="' . esc_attr( $notice_success ) . '">' . esc_html__( 'Blog network management setting saved.', 'network-central' ) . '</div>';
+				}
 				if ( 'enabled' === $nc_ok ) {
 					echo '<div class="' . esc_attr( $notice_success ) . '">' . esc_html__( 'Multisite enabled successfully. wp-config.php has been updated and the network tables have been created.', 'network-central' ) . '</div>';
 				}
@@ -140,8 +143,10 @@ class Network_Central_Page {
 
 				<?php if ( $is_multisite ) : ?>
 				<?php
-				$woo_sites   = Network_Central_Woo::get_woo_sites();
-				$woo_enabled = Network_Central_Woo::is_enabled();
+				$woo_sites    = Network_Central_Woo::get_woo_sites();
+				$woo_enabled  = Network_Central_Woo::is_enabled();
+				$all_sites    = Network_Central_Posts::get_all_sites();
+				$posts_enabled = Network_Central_Posts::is_enabled();
 				?>
 				<div class="mt-6 rounded-xl border border-slate-700/60 bg-slate-900/40 px-6 py-5">
 					<h2 class="text-sm font-semibold text-slate-400 uppercase tracking-widest mb-4"><?php esc_html_e( 'WooCommerce network management', 'network-central' ); ?></h2>
@@ -196,7 +201,58 @@ class Network_Central_Page {
 						<?php endif; ?>
 					<?php endif; ?>
 				</div>
-				<?php endif; ?>
+
+				<!-- Blog Manager section -->
+				<div class="mt-6 rounded-xl border border-slate-700/60 bg-slate-900/40 px-6 py-5">
+					<h2 class="text-sm font-semibold text-slate-400 uppercase tracking-widest mb-4"><?php esc_html_e( 'Blog network management', 'network-central' ); ?></h2>
+
+					<p class="text-slate-400 text-sm mb-4">
+						<?php
+						printf(
+							/* translators: %d: number of sites in network */
+							esc_html__( '%d site(s) in this network. Enable to view and manage all posts, pages and comments from one place.', 'network-central' ),
+							count( $all_sites )
+						);
+						?>
+					</p>
+
+					<form method="post" action="<?php echo esc_url( add_query_arg( 'page', NETWORK_CENTRAL_PAGE_SLUG, network_central_admin_url() ) ); ?>">
+						<?php wp_nonce_field( Network_Central_Posts::NONCE_ACTION, 'network_central_posts_nonce' ); ?>
+
+						<label class="flex items-center gap-4 cursor-pointer group mb-4">
+							<input type="checkbox" name="network_central_posts" value="1"
+								<?php checked( $posts_enabled ); ?>
+								class="nc-toggle-input sr-only">
+							<span class="nc-toggle"></span>
+							<div>
+								<p class="text-slate-100 font-semibold text-base group-hover:text-white transition">
+									<?php esc_html_e( 'Enable blog network management', 'network-central' ); ?>
+								</p>
+								<p class="text-slate-500 text-sm mt-0.5">
+									<?php esc_html_e( 'Adds a Blog Manager to handle posts, pages and comments across every site from the Network Admin.', 'network-central' ); ?>
+								</p>
+							</div>
+						</label>
+
+						<button type="submit"
+							class="px-5 py-2 rounded-lg bg-cyan-500/20 border border-cyan-400/60 text-cyan-300 text-sm font-medium hover:bg-cyan-500/30 transition">
+							<?php esc_html_e( 'Save', 'network-central' ); ?>
+						</button>
+					</form>
+
+					<?php if ( $posts_enabled ) : ?>
+						<div class="mt-4 pt-4 border-t border-slate-700/60">
+							<a href="<?php echo esc_url( network_admin_url( 'admin.php?page=' . Network_Central_Posts::PAGE_SLUG ) ); ?>"
+								class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-600 text-slate-300 hover:bg-slate-800 hover:border-slate-500 transition text-sm">
+								<?php esc_html_e( 'Go to Blog Manager', 'network-central' ); ?>
+								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+								</svg>
+							</a>
+						</div>
+					<?php endif; ?>
+				</div>
+				<?php endif; // is_multisite ?>
 
 				<div class="mt-6 rounded-xl border border-slate-700/60 bg-slate-900/40 px-6 py-5">
 					<h2 class="text-sm font-semibold text-slate-400 uppercase tracking-widest mb-4"><?php esc_html_e( 'System status', 'network-central' ); ?></h2>
