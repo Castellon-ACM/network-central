@@ -8,79 +8,79 @@ Stable tag: 1.0.0
 License: GPL-2.0+
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Activa o desactiva WordPress Multisite con un solo toggle desde el escritorio de administración.
+Enable or disable WordPress Multisite with a single toggle from the admin dashboard.
 
 == Description ==
 
-**Network Central** convierte una instalación normal de WordPress en una red Multisite (subdirectorios) con un único toggle, sin necesidad de editar archivos manualmente.
+**Network Central** converts a standard WordPress installation into a Multisite network (subdirectory mode) with a single toggle — no manual file editing required.
 
-= Qué hace al activar =
+= What happens when you enable =
 
-* Escribe las 7 constantes necesarias en `wp-config.php` (`WP_ALLOW_MULTISITE`, `MULTISITE`, `SUBDOMAIN_INSTALL`, `DOMAIN_CURRENT_SITE`, `PATH_CURRENT_SITE`, `SITE_ID_CURRENT_SITE`, `BLOG_ID_CURRENT_SITE`)
-* Reemplaza las reglas de reescritura de `.htaccess` con las reglas Multisite (subdirectorios)
-* Crea las tablas de red en la base de datos (`wp_site`, `wp_blogs`, etc.) con `install_network()` y `populate_network()`
-* Redirige automáticamente al Network Admin (`wp-admin/network.php`)
+* Writes the 7 required constants to `wp-config.php` (`WP_ALLOW_MULTISITE`, `MULTISITE`, `SUBDOMAIN_INSTALL`, `DOMAIN_CURRENT_SITE`, `PATH_CURRENT_SITE`, `SITE_ID_CURRENT_SITE`, `BLOG_ID_CURRENT_SITE`)
+* Replaces the WordPress single-site rewrite block in `.htaccess` with the Multisite subdirectory rules
+* Creates the network tables in the database (`wp_site`, `wp_blogs`, etc.) via `install_network()` and `populate_network()` — no manual visit to Tools → Network Setup needed
+* Redirects automatically to the Network Admin (`wp-admin/network.php`)
 
-= Qué hace al desactivar =
+= What happens when you disable =
 
-* Elimina todas las constantes Multisite de `wp-config.php`
-* Restaura las reglas de reescritura single-site en `.htaccess`
+* Removes all Multisite constants from `wp-config.php`
+* Restores single-site rewrite rules in `.htaccess`
 
-= Panel de estado =
+= System status panel =
 
-La página muestra en tiempo real si Multisite está activo, si `wp-config.php` y `.htaccess` son escribibles, la versión de PHP y la versión de WordPress.
+The page shows in real time whether Multisite is active, whether `wp-config.php` and `.htaccess` are writable, and the current PHP and WordPress versions.
 
-= Requisitos =
+= Requirements =
 
-* PHP 7.4 o superior
-* `wp-config.php` con permisos de escritura
-* Servidor Apache (`.htaccess` activo) o capacidad de editar manualmente las reglas de reescritura en Nginx
+* PHP 7.4 or higher
+* `wp-config.php` with write permissions
+* Apache server with `.htaccess` support, or ability to manually edit Nginx rewrite rules
 
 == Installation ==
 
-1. Sube la carpeta `network-central` a `/wp-content/plugins/`.
-2. Activa el plugin desde **Plugins → Plugins instalados**.
-3. Ve a **Network Central** en la barra lateral del escritorio.
-4. Activa el toggle y pulsa **Guardar**.
+1. Upload the `network-central` folder to `/wp-content/plugins/`.
+2. Activate the plugin from **Plugins → Installed Plugins**.
+3. Go to **Network Central** in the admin sidebar.
+4. Toggle the switch and click **Save**.
 
 == Frequently Asked Questions ==
 
-= ¿Funciona con instalaciones en subdominios? =
+= Does this support subdomain installs? =
 
-No. Network Central configura únicamente la modalidad de **subdirectorios** (p. ej. `misitio.com/tienda/`). Si necesitas subdominios, edita `wp-config.php` manualmente y cambia `SUBDOMAIN_INSTALL` a `true`.
+No. Network Central configures **subdirectory** mode only (e.g. `mysite.com/store/`). For subdomain installs, edit `wp-config.php` manually and set `SUBDOMAIN_INSTALL` to `true`.
 
-= ¿Qué pasa si `wp-config.php` no tiene permisos de escritura? =
+= What if wp-config.php is not writable? =
 
-El toggle aparece desactivado y se muestra un aviso. Ajusta los permisos del archivo (`chmod 644` o `chmod 664`) antes de usar el plugin.
+The toggle is disabled and a notice is shown. Fix the file permissions (`chmod 644` or `chmod 664`) before using the plugin.
 
-= ¿Se pueden perder datos al desactivar Multisite? =
+= Will disabling Multisite delete subsite data? =
 
-Los datos de los subsitios (tablas `wp_X_posts`, `wp_X_options`, etc.) permanecen en la base de datos. El plugin solo elimina las constantes de configuración de `wp-config.php` y restaura las reglas de `.htaccess`. Para eliminar los datos de la red, hazlo manualmente desde phpMyAdmin.
+No. Subsite tables (`wp_2_posts`, `wp_2_options`, etc.) remain in the database. The plugin only removes the configuration constants from `wp-config.php` and restores the `.htaccess` rewrite rules. To remove network tables, do it manually via phpMyAdmin.
 
-= ¿Es compatible con Nginx? =
+= Is it compatible with Nginx? =
 
-El plugin escribe reglas en `.htaccess`, que Nginx no lee. Si usas Nginx, activa el toggle para que el plugin escriba `wp-config.php` y las tablas, pero añade manualmente las reglas de reescritura Multisite a la configuración de Nginx.
+The plugin writes `.htaccess`, which Nginx ignores. On Nginx, enable the toggle to let the plugin update `wp-config.php` and create the network tables, then add the Multisite rewrite rules to your Nginx config manually.
 
-= ¿Qué ocurre si el archivo `.htaccess` no es escribible? =
+= What if .htaccess is not writable? =
 
-El plugin escribe `wp-config.php` e instala las tablas igualmente. El aviso de estado indica que `.htaccess` no es escribible para que lo actualices a mano.
+The plugin writes `wp-config.php` and installs the network tables regardless. The status panel flags that `.htaccess` is not writable so you can update it manually.
 
 == Screenshots ==
 
-1. Página principal con el toggle de Multisite y el panel de estado del sistema.
+1. Main page with the Multisite toggle and system status panel.
 
 == Changelog ==
 
 = 1.0.0 =
-* Versión inicial.
-* Toggle único para activar/desactivar WordPress Multisite.
-* Escritura automática de constantes en wp-config.php.
-* Actualización de reglas de reescritura en .htaccess.
-* Creación de tablas de red con install_network() y populate_network().
-* Panel de estado del sistema (multisite, wp-config, htaccess, PHP, WP).
-* UI dark con Tailwind CSS, estilo coherente con Settinator.
+* Initial release.
+* Single toggle to enable or disable WordPress Multisite.
+* Automatic write of constants to wp-config.php.
+* Automatic update of .htaccess rewrite rules.
+* Network tables created via install_network() and populate_network().
+* System status panel (Multisite, wp-config, htaccess, PHP, WordPress).
+* Dark UI with Tailwind CSS, consistent style with Settinator.
 
 == Upgrade Notice ==
 
 = 1.0.0 =
-Primera versión estable.
+First stable release.

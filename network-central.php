@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Network Central
- * Description: Activa o desactiva WordPress Multisite con un solo toggle.
+ * Description: Enable or disable WordPress Multisite with a single toggle.
  * Version: 1.0.0
  * Author: 	Alejandro Castellón <Castellon-ACM>
  * Text Domain: network-central

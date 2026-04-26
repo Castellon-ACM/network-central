@@ -9,15 +9,15 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 ## [1.0.0] – 2026-04-26
 
 ### Added
-- Toggle único en el escritorio de administración para activar o desactivar WordPress Multisite (subdirectorios).
-- `NC_Wpconfig` — escribe y elimina las 7 constantes Multisite en `wp-config.php` (`WP_ALLOW_MULTISITE`, `MULTISITE`, `SUBDOMAIN_INSTALL`, `DOMAIN_CURRENT_SITE`, `PATH_CURRENT_SITE`, `SITE_ID_CURRENT_SITE`, `BLOG_ID_CURRENT_SITE`). Invalida OPcache tras cada escritura.
-- `NC_Htaccess` — reemplaza las reglas WordPress single-site por las reglas Multisite en `.htaccess` al activar, y las restaura al desactivar.
-- `NC_Multisite` — orquestador: llama a `install_network()` y `populate_network()` en la misma petición para crear las tablas de red (`wp_site`, `wp_blogs`, etc.) sin necesidad de visitar manualmente Tools → Network Setup.
-- `NC_Page` — página de administración con toggle accesible, panel de estado del sistema (Multisite activo, wp-config escribible, .htaccess escribible, versión PHP, versión WP) y avisos de error/éxito.
-- Menú de administración propio con icono `dashicons-networking`, posición 79.
-- Nonce verification y `manage_options` capability check en todos los formularios.
-- Compatible con PHP 7.4+ (sin uso de `match`, sin `enum`, sin sintaxis de PHP 8+).
-- UI dark con Tailwind CSS CDN y JetBrains Mono, estilo coherente con el plugin Settinator.
+- Single toggle in the admin dashboard to enable or disable WordPress Multisite (subdirectory install).
+- `NC_Wpconfig` — writes and removes the 7 Multisite constants in `wp-config.php` (`WP_ALLOW_MULTISITE`, `MULTISITE`, `SUBDOMAIN_INSTALL`, `DOMAIN_CURRENT_SITE`, `PATH_CURRENT_SITE`, `SITE_ID_CURRENT_SITE`, `BLOG_ID_CURRENT_SITE`). OPcache is invalidated after each write.
+- `NC_Htaccess` — replaces the WordPress single-site rewrite block with Multisite subdirectory rules on enable, and restores single-site rules on disable.
+- `NC_Multisite` — orchestrator: calls `install_network()` and `populate_network()` in the same request to create network tables (`wp_site`, `wp_blogs`, etc.) without requiring a manual visit to Tools → Network Setup.
+- `NC_Page` — admin page with accessible toggle, system status panel (Multisite active, wp-config writable, .htaccess writable, PHP version, WordPress version), and error/success notices.
+- Top-level admin menu with `dashicons-networking` icon at position 79.
+- Nonce verification and `manage_options` capability check on all form submissions.
+- Compatible with PHP 7.4+ (no `match`, no `enum`, no PHP 8-only syntax).
+- Dark UI with Tailwind CSS CDN and JetBrains Mono font, consistent with the Settinator plugin style.
 
 [Unreleased]: https://github.com/Castellon-ACM/network-central/compare/v1.0.0...HEAD
 [1.0.0]: https://github.com/Castellon-ACM/network-central/releases/tag/v1.0.0
