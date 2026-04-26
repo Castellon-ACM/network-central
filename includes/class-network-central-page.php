@@ -75,7 +75,7 @@ class Network_Central_Page {
 						</div>
 					<?php endif; ?>
 
-					<form method="post" action="<?php echo esc_url( admin_url( 'admin.php?page=' . NETWORK_CENTRAL_PAGE_SLUG ) ); ?>">
+					<form method="post" action="<?php echo esc_url( add_query_arg( 'page', NETWORK_CENTRAL_PAGE_SLUG, network_central_admin_url() ) ); ?>">
 						<?php wp_nonce_field( NETWORK_CENTRAL_NONCE_ACTION, 'network_central_nonce' ); ?>
 
 						<div class="space-y-2">

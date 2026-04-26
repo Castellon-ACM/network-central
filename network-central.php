@@ -22,11 +22,11 @@
 
 defined( 'ABSPATH' ) || die( 'No script kiddies please!' );
 
-define( 'NETWORK_CENTRAL_VERSION',     '1.0.1' );
-define( 'NETWORK_CENTRAL_FILE',        __FILE__ );
-define( 'NETWORK_CENTRAL_PLUGIN_URL',  plugin_dir_url( __FILE__ ) );
-define( 'NETWORK_CENTRAL_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
-define( 'NETWORK_CENTRAL_PAGE_SLUG',   'network-central' );
+define( 'NETWORK_CENTRAL_VERSION',      '1.0.1' );
+define( 'NETWORK_CENTRAL_FILE',         __FILE__ );
+define( 'NETWORK_CENTRAL_PLUGIN_URL',   plugin_dir_url( __FILE__ ) );
+define( 'NETWORK_CENTRAL_PLUGIN_PATH',  plugin_dir_path( __FILE__ ) );
+define( 'NETWORK_CENTRAL_PAGE_SLUG',    'network-central' );
 define( 'NETWORK_CENTRAL_NONCE_ACTION', 'network_central_toggle_multisite' );
 
 require_once NETWORK_CENTRAL_PLUGIN_PATH . 'includes/class-network-central-wpconfig.php';
@@ -34,10 +34,18 @@ require_once NETWORK_CENTRAL_PLUGIN_PATH . 'includes/class-network-central-htacc
 require_once NETWORK_CENTRAL_PLUGIN_PATH . 'includes/class-network-central-multisite.php';
 require_once NETWORK_CENTRAL_PLUGIN_PATH . 'includes/class-network-central-page.php';
 
-add_action( 'plugins_loaded',        'network_central_plugin_init' );
-add_action( 'admin_menu',            'network_central_add_menu_page' );
-add_action( 'admin_enqueue_scripts', 'network_central_enqueue_assets' );
-add_action( 'admin_init',            'network_central_maybe_handle_toggle', 1 );
+add_action( 'plugins_loaded', 'network_central_plugin_init' );
+add_action( 'admin_init',     'network_central_maybe_handle_toggle', 1 );
+
+if ( is_multisite() ) {
+	// Multisite active: register only in the Network Admin.
+	add_action( 'network_admin_menu',            'network_central_add_menu_page' );
+	add_action( 'network_admin_enqueue_scripts', 'network_central_enqueue_assets' );
+} else {
+	// Single site: register in the regular admin so the toggle is reachable.
+	add_action( 'admin_menu',            'network_central_add_menu_page' );
+	add_action( 'admin_enqueue_scripts', 'network_central_enqueue_assets' );
+}
 
 /**
  * Load plugin text domain.
@@ -54,10 +62,11 @@ function network_central_plugin_init() {
  * @return void
  */
 function network_central_add_menu_page() {
+	$capability = is_multisite() ? 'manage_network' : 'manage_options';
 	add_menu_page(
 		__( 'Network Central', 'network-central' ),
 		__( 'Network Central', 'network-central' ),
-		'manage_options',
+		$capability,
 		NETWORK_CENTRAL_PAGE_SLUG,
 		array( 'Network_Central_Page', 'render' ),
 		'dashicons-networking',
@@ -90,6 +99,15 @@ function network_central_enqueue_assets( $hook_suffix ) {
 }
 
 /**
+ * Return the correct base admin URL depending on context (network vs single-site).
+ *
+ * @return string
+ */
+function network_central_admin_url() {
+	return is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' );
+}
+
+/**
  * Handle the Multisite toggle form submission.
  *
  * @return void
@@ -104,14 +122,17 @@ function network_central_maybe_handle_toggle() {
 	if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['network_central_nonce'] ) ), NETWORK_CENTRAL_NONCE_ACTION ) ) {
 		wp_die( esc_html__( 'Security check failed.', 'network-central' ) );
 	}
-	if ( ! current_user_can( 'manage_options' ) ) {
+
+	$capability = is_multisite() ? 'manage_network' : 'manage_options';
+	if ( ! current_user_can( $capability ) ) {
 		wp_die( esc_html__( 'Permission denied.', 'network-central' ) );
 	}
 
-	$enable = isset( $_POST['network_central_multisite'] ) && '1' === $_POST['network_central_multisite'];
+	$base_url = network_central_admin_url();
+	$enable   = isset( $_POST['network_central_multisite'] ) && '1' === $_POST['network_central_multisite'];
 
 	if ( ! Network_Central_Wpconfig::is_writable() ) {
-		wp_safe_redirect( add_query_arg( array( 'page' => NETWORK_CENTRAL_PAGE_SLUG, 'nc_err' => 'not_writable' ), admin_url( 'admin.php' ) ) );
+		wp_safe_redirect( add_query_arg( array( 'page' => NETWORK_CENTRAL_PAGE_SLUG, 'nc_err' => 'not_writable' ), $base_url ) );
 		exit;
 	}
 
@@ -121,7 +142,7 @@ function network_central_maybe_handle_toggle() {
 			wp_safe_redirect( add_query_arg( array( 'page' => NETWORK_CENTRAL_PAGE_SLUG, 'nc_ok' => 'enabled' ), admin_url( 'admin.php' ) ) );
 			exit;
 		}
-		wp_safe_redirect( add_query_arg( array( 'page' => NETWORK_CENTRAL_PAGE_SLUG, 'nc_err' => 'write_failed' ), admin_url( 'admin.php' ) ) );
+		wp_safe_redirect( add_query_arg( array( 'page' => NETWORK_CENTRAL_PAGE_SLUG, 'nc_err' => 'write_failed' ), $base_url ) );
 		exit;
 	}
 
@@ -132,10 +153,10 @@ function network_central_maybe_handle_toggle() {
 			wp_safe_redirect( add_query_arg( array( 'page' => NETWORK_CENTRAL_PAGE_SLUG, 'nc_ok' => 'disabled' ), admin_url( 'admin.php' ) ) );
 			exit;
 		}
-		wp_safe_redirect( add_query_arg( array( 'page' => NETWORK_CENTRAL_PAGE_SLUG, 'nc_err' => 'write_failed' ), admin_url( 'admin.php' ) ) );
+		wp_safe_redirect( add_query_arg( array( 'page' => NETWORK_CENTRAL_PAGE_SLUG, 'nc_err' => 'write_failed' ), $base_url ) );
 		exit;
 	}
 
-	wp_safe_redirect( add_query_arg( array( 'page' => NETWORK_CENTRAL_PAGE_SLUG ), admin_url( 'admin.php' ) ) );
+	wp_safe_redirect( add_query_arg( array( 'page' => NETWORK_CENTRAL_PAGE_SLUG ), $base_url ) );
 	exit;
 }
