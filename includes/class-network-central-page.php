@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin page renderer for Network Central.
+ * Admin page renderer.
  *
  * @package NetworkCentral
  */
@@ -8,9 +8,9 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Class NC_Page
+ * Class Network_Central_Page
  */
-class NC_Page {
+class Network_Central_Page {
 
 	/**
 	 * Render the Network Central admin page.
@@ -19,9 +19,9 @@ class NC_Page {
 	 */
 	public static function render() {
 		$is_multisite      = defined( 'MULTISITE' ) && MULTISITE;
-		$multisite_allowed = NC_Wpconfig::get_multisite_allowed();
-		$wpconfig_writable = NC_Wpconfig::is_writable();
-		$htaccess_writable = NC_Htaccess::is_writable();
+		$multisite_allowed = Network_Central_Wpconfig::get_multisite_allowed();
+		$wpconfig_writable = Network_Central_Wpconfig::is_writable();
+		$htaccess_writable = Network_Central_Htaccess::is_writable();
 		$toggle_on         = $is_multisite || $multisite_allowed;
 		$can_toggle        = $wpconfig_writable;
 
@@ -72,13 +72,13 @@ class NC_Page {
 						</div>
 					<?php endif; ?>
 
-					<form method="post" action="<?php echo esc_url( admin_url( 'admin.php?page=' . NC_PAGE_SLUG ) ); ?>">
-						<?php wp_nonce_field( NC_NONCE_ACTION, 'nc_multisite_nonce' ); ?>
+					<form method="post" action="<?php echo esc_url( admin_url( 'admin.php?page=' . NETWORK_CENTRAL_PAGE_SLUG ) ); ?>">
+						<?php wp_nonce_field( NETWORK_CENTRAL_NONCE_ACTION, 'network_central_nonce' ); ?>
 
 						<div class="space-y-2">
 							<label class="flex items-center gap-4 cursor-pointer group <?php echo ! $can_toggle ? 'opacity-60 cursor-not-allowed' : ''; ?>">
 								<div class="relative flex-shrink-0">
-									<input type="checkbox" name="nc_multisite" value="1"
+									<input type="checkbox" name="network_central_multisite" value="1"
 										<?php checked( $toggle_on ); ?>
 										<?php echo ! $can_toggle ? 'disabled' : ''; ?>
 										class="sr-only peer">

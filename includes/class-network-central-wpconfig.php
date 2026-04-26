@@ -8,9 +8,9 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Class NC_Wpconfig
+ * Class Network_Central_Wpconfig
  */
-class NC_Wpconfig {
+class Network_Central_Wpconfig {
 
 	/**
 	 * Path to wp-config.php.
@@ -43,7 +43,7 @@ class NC_Wpconfig {
 	}
 
 	/**
-	 * Check if WP_ALLOW_MULTISITE is already true in wp-config.php.
+	 * Check if WP_ALLOW_MULTISITE is already set to true in wp-config.php.
 	 *
 	 * @return bool
 	 */
@@ -52,7 +52,7 @@ class NC_Wpconfig {
 	}
 
 	/**
-	 * Write all multisite constants to wp-config.php (subdirectory install).
+	 * Write all required multisite constants to wp-config.php (subdirectory install).
 	 *
 	 * @return bool True on success.
 	 */
@@ -102,7 +102,7 @@ class NC_Wpconfig {
 	}
 
 	/**
-	 * Remove all multisite constants from wp-config.php.
+	 * Remove all multisite constants from wp-config.php to revert to single-site.
 	 *
 	 * @return bool True on success.
 	 */

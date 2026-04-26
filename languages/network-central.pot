@@ -1,0 +1,131 @@
+# Copyright (C) 2026 Alejandro Castellón
+# This file is distributed under the GPL-2.0+ license.
+msgid ""
+msgstr ""
+"Project-Id-Version: Network Central 1.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/Castellon-ACM/network-central/issues\n"
+"POT-Creation-Date: 2026-04-26T00:00:00+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2026-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: WP-CLI 2.x\n"
+"X-Domain: network-central\n"
+
+#. Plugin Name of the plugin.
+msgid "Network Central"
+msgstr ""
+
+#. Description of the plugin.
+msgid "Enable or disable WordPress Multisite with a single toggle."
+msgstr ""
+
+#: network-central.php
+msgid "Security check failed."
+msgstr ""
+
+#: network-central.php
+msgid "Permission denied."
+msgstr ""
+
+#: includes/class-network-central-page.php
+msgid "WordPress Multisite management"
+msgstr ""
+
+#: includes/class-network-central-page.php
+msgid "Multisite disabled. wp-config.php and .htaccess have been restored to single-site."
+msgstr ""
+
+#: includes/class-network-central-page.php
+msgid "wp-config.php is not writable. Fix the file permissions and try again."
+msgstr ""
+
+#: includes/class-network-central-page.php
+msgid "Failed to write wp-config.php or .htaccess. Check file permissions."
+msgstr ""
+
+#: includes/class-network-central-page.php
+msgid "Multisite active"
+msgstr ""
+
+#: includes/class-network-central-page.php
+msgid "Single site"
+msgstr ""
+
+#: includes/class-network-central-page.php
+msgid "Enable WordPress Multisite"
+msgstr ""
+
+#: includes/class-network-central-page.php
+msgid "Subdirectory install. Writes constants to wp-config.php, updates .htaccess rewrite rules, and creates the network tables."
+msgstr ""
+
+#: includes/class-network-central-page.php
+msgid "wp-config.php is not writable. Fix file permissions to enable this option."
+msgstr ""
+
+#: includes/class-network-central-page.php
+msgid "Save"
+msgstr ""
+
+#: includes/class-network-central-page.php
+msgid "Go to Network Admin"
+msgstr ""
+
+#: includes/class-network-central-page.php
+msgid "WP_ALLOW_MULTISITE is set but the network is not fully installed yet."
+msgstr ""
+
+#: includes/class-network-central-page.php
+msgid "Complete the network setup from the WordPress screen."
+msgstr ""
+
+#: includes/class-network-central-page.php
+msgid "Go to Tools → Network Setup"
+msgstr ""
+
+#: includes/class-network-central-page.php
+msgid "System status"
+msgstr ""
+
+#: includes/class-network-central-page.php
+msgid "WordPress Multisite"
+msgstr ""
+
+#: includes/class-network-central-page.php
+msgid "Active"
+msgstr ""
+
+#: includes/class-network-central-page.php
+msgid "Inactive"
+msgstr ""
+
+#: includes/class-network-central-page.php
+msgid "wp-config.php writable"
+msgstr ""
+
+#: includes/class-network-central-page.php
+msgid "Yes"
+msgstr ""
+
+#: includes/class-network-central-page.php
+msgid "No"
+msgstr ""
+
+#: includes/class-network-central-page.php
+msgid ".htaccess writable"
+msgstr ""
+
+#: includes/class-network-central-page.php
+msgid "No — manual rewrite rules required"
+msgstr ""
+
+#: includes/class-network-central-page.php
+msgid "PHP version"
+msgstr ""
+
+#: includes/class-network-central-page.php
+msgid "WordPress version"
+msgstr ""

@@ -8,9 +8,9 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Class NC_Multisite
+ * Class Network_Central_Multisite
  */
-class NC_Multisite {
+class Network_Central_Multisite {
 
 	/**
 	 * Enable multisite: write wp-config constants, update .htaccess, create network tables.
@@ -18,12 +18,12 @@ class NC_Multisite {
 	 * @return bool True on success.
 	 */
 	public static function enable() {
-		$ok = NC_Wpconfig::enable_multisite_full();
+		$ok = Network_Central_Wpconfig::enable_multisite_full();
 		if ( ! $ok ) {
 			return false;
 		}
-		if ( NC_Htaccess::is_writable() ) {
-			NC_Htaccess::add_multisite_rules();
+		if ( Network_Central_Htaccess::is_writable() ) {
+			Network_Central_Htaccess::add_multisite_rules();
 		}
 		self::install_network_tables();
 		return true;
@@ -35,9 +35,9 @@ class NC_Multisite {
 	 * @return bool True on success.
 	 */
 	public static function disable() {
-		$ok = NC_Wpconfig::disable_multisite_full();
-		if ( $ok && NC_Htaccess::is_writable() ) {
-			NC_Htaccess::restore_single_site_rules();
+		$ok = Network_Central_Wpconfig::disable_multisite_full();
+		if ( $ok && Network_Central_Htaccess::is_writable() ) {
+			Network_Central_Htaccess::restore_single_site_rules();
 		}
 		return $ok;
 	}

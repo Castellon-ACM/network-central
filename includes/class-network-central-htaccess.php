@@ -8,9 +8,9 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Class NC_Htaccess
+ * Class Network_Central_Htaccess
  */
-class NC_Htaccess {
+class Network_Central_Htaccess {
 
 	/**
 	 * Path to .htaccess.
@@ -33,7 +33,7 @@ class NC_Htaccess {
 	}
 
 	/**
-	 * Check if .htaccess is writable.
+	 * Check if .htaccess is writable (or parent dir is writable if file does not exist).
 	 *
 	 * @return bool
 	 */
@@ -43,7 +43,7 @@ class NC_Htaccess {
 	}
 
 	/**
-	 * Replace WordPress single-site rewrite block with multisite rules.
+	 * Replace the WordPress single-site rewrite block with Multisite subdirectory rules.
 	 *
 	 * @return bool True on success.
 	 */
@@ -83,7 +83,7 @@ class NC_Htaccess {
 	}
 
 	/**
-	 * Restore single-site WordPress rewrite rules (remove multisite block).
+	 * Restore single-site WordPress rewrite rules (removes the Multisite block).
 	 *
 	 * @return bool True on success.
 	 */
