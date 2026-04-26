@@ -360,7 +360,7 @@ img,video { height:auto;max-width:100% }
    ========================================================================== */
 
 .nc-body .wrap { margin-left:0;margin-right:0;max-width:none }
-.nc-body .nc-breakout { margin-left:-20px;margin-right:-20px }
+.nc-body .nc-breakout { margin-left:-20px;margin-right:-20px;margin-top:-8px;padding:2rem 2.5rem;box-sizing:border-box }
 
 .nc-body .nc-breakout ::-webkit-scrollbar { width:6px;height:6px }
 .nc-body .nc-breakout ::-webkit-scrollbar-track { background:rgba(15,23,42,.4);border-radius:9999px }

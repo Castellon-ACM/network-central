@@ -55,7 +55,7 @@ class Network_Central_Woo_Page {
 
 		$total_pages = $total > 0 ? (int) ceil( $total / $per_page ) : 1;
 		?>
-		<div class="nc-breakout min-h-screen bg-slate-950 text-slate-100 font-mono" style="margin-left:-20px;margin-top:-8px;padding:2rem 2.5rem;box-sizing:border-box;">
+		<div class="nc-breakout min-h-screen bg-slate-950 text-slate-100 font-mono">
 		<div class="max-w-7xl mx-auto">
 
 			<!-- Header -->
@@ -103,7 +103,6 @@ class Network_Central_Woo_Page {
 					<input type="hidden" name="page" value="<?php echo esc_attr( Network_Central_Woo::PAGE_SLUG ); ?>">
 					<input type="hidden" name="tab" value="<?php echo esc_attr( $active_tab ); ?>">
 					<select name="nc_site"
-						style="background-color:#1e293b;color:#e2e8f0;color-scheme:dark;"
 						class="border border-slate-600 text-sm rounded-lg px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-cyan-500">
 						<option value="0" <?php selected( 0, $filter_site ); ?>><?php esc_html_e( 'All sites', 'network-central' ); ?></option>
 						<?php foreach ( $woo_sites as $ws ) : ?>
